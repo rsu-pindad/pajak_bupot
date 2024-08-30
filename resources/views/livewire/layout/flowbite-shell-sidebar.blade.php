@@ -3,7 +3,8 @@
 use Livewire\Volt\Component;
 
 new class extends Component {}; ?>
-
+{{-- <x-heroicons::solid.chevron-up class="size-4 ms-auto hidden h-4 w-4 hs-accordion-active:block" />
+<x-heroicons::solid.chevron-down class="size-4 ms-auto block h-4 w-4 hs-accordion-active:hidden" /> --}}
 <aside id="drawer-navigation"
        class="fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-white pt-14 transition-transform dark:border-gray-700 dark:bg-gray-800 md:translate-x-0"
        aria-label="Sidenav">
@@ -26,7 +27,7 @@ new class extends Component {}; ?>
           <x-cui-cil-file
                           class="h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
           <span class="ml-3 flex-1 whitespace-nowrap text-left">Bukti Potong</span>
-          <x-cui-cil-chevron-circle-down-alt class="h-6 w-6" />
+          <x-cui-cil-chevron-circle-down-alt class="size-4" />
         </button>
         @if (request()->routeIs(['kode', 'satuan', 'vendor', 'tipe-merek', 'tipe', 'merek', 'unit']))
           display:block;
