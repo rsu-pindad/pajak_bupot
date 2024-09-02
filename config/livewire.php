@@ -58,11 +58,11 @@ return [
      * |
      */
     'temporary_file_upload' => [
-        'disk' => 'public',                                                           // Example: 'local', 's3'              | Default: 'default'
-        'rules' => ['required', 'file', 'max:122880', 'mimes:zip|x-zip-compressed'],  // Example: ['file', 'mimes:png,jpg']  | Default: ['required', 'file', 'max:12288'] (12MB)
-        'directory' => 'tmp_bupot',                                                   // Example: 'tmp'                      | Default: 'livewire-tmp'
-        'middleware' => 'throttle:5,1',                                               // Example: 'throttle:5,1'             | Default: 'throttle:60,1'
-        'preview_mimes' => [                                                          // Supported file types for temporary pre-signed file URLs...
+        'disk' => 'public',                             // Example: 'local', 's3'              | Default: 'default'
+        'rules' => ['required', 'file', 'max:122880'],  // Example: ['file', 'mimes:png,jpg']  | Default: ['required', 'file', 'max:12288'] (12MB) | ['required', 'file', 'max:122880', 'mimes:zip|x-zip-compressed']
+        'directory' => 'tmp_bupot',                     // Example: 'tmp'                      | Default: 'livewire-tmp'
+        'middleware' => 'throttle:5,1',                 // Example: 'throttle:5,1'             | Default: 'throttle:60,1'
+        'preview_mimes' => [                            // Supported file types for temporary pre-signed file URLs...
             'png',
             'gif',
             'bmp',
@@ -79,9 +79,11 @@ return [
             'mpga',
             'webp',
             'wma',
+            'zip',
+            'x-zip-compressed'
         ],
-        'max_upload_time' => 5,                                                       // Max duration (in minutes) before an upload is invalidated...
-        'cleanup' => true,                                                            // Should cleanup temporary uploads older than 24 hrs...
+        'max_upload_time' => 5,                         // Max duration (in minutes) before an upload is invalidated...
+        'cleanup' => true,                              // Should cleanup temporary uploads older than 24 hrs...
     ],
 
     /*

@@ -3,8 +3,6 @@
 use Livewire\Volt\Component;
 
 new class extends Component {}; ?>
-{{-- <x-heroicons::solid.chevron-up class="size-4 ms-auto hidden h-4 w-4 hs-accordion-active:block" />
-<x-heroicons::solid.chevron-down class="size-4 ms-auto block h-4 w-4 hs-accordion-active:hidden" /> --}}
 <aside id="drawer-navigation"
        class="fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-white pt-14 transition-transform dark:border-gray-700 dark:bg-gray-800 md:translate-x-0"
        aria-label="Sidenav">
@@ -22,8 +20,8 @@ new class extends Component {}; ?>
       <li>
         <button type="button"
                 class="group flex w-full items-center rounded-lg p-2 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700"
-                aria-controls="dropdown-pages"
-                data-collapse-toggle="dropdown-pages">
+                aria-controls="dropdown-bupot"
+                data-collapse-toggle="dropdown-bupot">
           <x-cui-cil-file
                           class="h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
           <span class="ml-3 flex-1 whitespace-nowrap text-left">Bukti Potong</span>
@@ -32,7 +30,7 @@ new class extends Component {}; ?>
         @if (request()->routeIs(['kode', 'satuan', 'vendor', 'tipe-merek', 'tipe', 'merek', 'unit']))
           display:block;
         @endif
-        <ul id="dropdown-pages"
+        <ul id="dropdown-bupot"
             class="@if (request()->routeIs(['bupot-upload', 'bupot-publish'])) space-y-2 py-2 @else hidden space-y-2 py-2 @endif">
           <li>
             <a href="{{ route('bupot-upload') }}"
@@ -53,41 +51,25 @@ new class extends Component {}; ?>
       <li>
         <button type="button"
                 class="group flex w-full items-center rounded-lg p-2 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700"
-                aria-controls="dropdown-sales"
-                data-collapse-toggle="dropdown-sales">
-          <svg aria-hidden="true"
-               class="h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-               fill="currentColor"
-               viewBox="0 0 20 20"
-               xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                  d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                  clip-rule="evenodd"></path>
-          </svg>
-          <span class="ml-3 flex-1 whitespace-nowrap text-left">Sales</span>
-          <svg aria-hidden="true"
-               class="h-6 w-6"
-               fill="currentColor"
-               viewBox="0 0 20 20"
-               xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"></path>
-          </svg>
+                aria-controls="dropdown-karyawan"
+                data-collapse-toggle="dropdown-karyawan">
+          <x-cui-cil-user
+                          class="h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+          <span class="ml-3 flex-1 whitespace-nowrap text-left">Karyawan</span>
+          <x-cui-cil-chevron-circle-down-alt class="size-4" />
         </button>
-        <ul id="dropdown-sales"
+        <ul id="dropdown-karyawan"
             class="hidden space-y-2 py-2">
           <li>
-            <a href="#"
-               class="group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">Products</a>
+            <a href="{{ route('karyawan-personalia') }}"
+               class="@if (Route::currentRouteName() === 'karyawan-personalia') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
+              <span class="ml-3 flex-1 whitespace-nowrap">Personalia</span>
+              <x-cui-cil-user class="h-4 w-4" />
+            </a>
           </li>
           <li>
             <a href="#"
-               class="group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">Billing</a>
-          </li>
-          <li>
-            <a href="#"
-               class="group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">Invoice</a>
+               class="group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">Payroll</a>
           </li>
         </ul>
       </li>

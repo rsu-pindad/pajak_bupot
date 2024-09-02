@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\ManagePublish;
+use App\Livewire\ManageTransfers;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -24,9 +26,19 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Volt::route('beranda', 'beranda')->name('beranda');
+Route::get('dev-login', function () {
+    abort_unless(app()->environment('local'), 403);
 
-Volt::route('bukti-potong-upload', 'bupot-upload')->name('bupot-upload');
-Volt::route('bukti-potong-publish', 'bupot-publish')->name('bupot-publish');
+    auth()->loginUsingId(\App\Models\User::first());
+
+    return redirect()->to('beranda');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Volt::route('beranda', 'beranda')->name('beranda');
+    Volt::route('karyawan-personalia', 'karyawan-personalia')->name('karyawan-personalia');
+    Route::get('/bukti-potong-upload', ManageTransfers::class)->name('bupot-upload');
+    Route::get('/bukti-potong-publish', ManagePublish::class)->name('bupot-publish');
+});
 
 require __DIR__ . '/auth.php';
