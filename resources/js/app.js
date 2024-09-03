@@ -2,10 +2,13 @@ import './bootstrap';
 import 'flowbite';
 import confetti from "canvas-confetti";
 import './../../vendor/power-components/livewire-powergrid/dist/tailwind.css';
-import flatpickr from "flatpickr"; 
+import flatpickr from "flatpickr";
 import 'flatpickr/dist/flatpickr.min.css';
+import "tom-select/dist/css/tom-select.bootstrap5.min.css";
 import TomSelect from "tom-select";
+
 window.TomSelect = TomSelect;
+window.flatpickr = flatpickr;
 
 Livewire.on('confetti', () => {
     function randomInRange(min, max) {

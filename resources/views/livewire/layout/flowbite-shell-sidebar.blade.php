@@ -56,12 +56,12 @@ new class extends Component {}; ?>
           <x-cui-cil-chevron-circle-down-alt class="size-4" />
         </button>
         <ul id="dropdown-karyawan"
-            class="hidden space-y-2 py-2">
+            class="@if (request()->routeIs(['karyawan-personalia'])) space-y-2 py-2 @else hidden space-y-2 py-2 @endif">
           <li>
             <a href="{{ route('karyawan-personalia') }}"
                class="@if (Route::currentRouteName() === 'karyawan-personalia') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
               <span class="ml-3 flex-1 whitespace-nowrap">Personalia</span>
-              <x-cui-cil-user class="h-4 w-4" />
+              <x-cui-cil-people class="h-4 w-4" />
             </a>
           </li>
         </ul>
@@ -91,44 +91,27 @@ new class extends Component {}; ?>
       <li>
         <button type="button"
                 class="group flex w-full items-center rounded-lg p-2 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700"
-                aria-controls="dropdown-authentication"
-                data-collapse-toggle="dropdown-authentication">
-          <svg aria-hidden="true"
-               class="h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-               fill="currentColor"
-               viewBox="0 0 20 20"
-               xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                  d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                  clip-rule="evenodd"></path>
-          </svg>
-          <span class="ml-3 flex-1 whitespace-nowrap text-left">Authentication</span>
-          <svg aria-hidden="true"
-               class="h-6 w-6"
-               fill="currentColor"
-               viewBox="0 0 20 20"
-               xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"></path>
-          </svg>
+                aria-controls="dropdown-payroll"
+                data-collapse-toggle="dropdown-payroll">
+                <x-cui-cil-money
+                class="h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+          <span class="ml-3 flex-1 whitespace-nowrap text-left">Payroll</span>
+          <x-cui-cil-chevron-circle-down-alt class="size-4" />
         </button>
-        <ul id="dropdown-authentication"
+        <ul id="dropdown-payroll"
             class="hidden space-y-2 py-2">
           <li>
-            <a href="#"
-               class="group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">Sign
-              In</a>
+          <a href="{{ route('payroll-insentif') }}"
+               class="@if (Route::currentRouteName() === 'payroll-insentif') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
+              <span class="ml-3 flex-1 whitespace-nowrap">Insentif</span>
+              <x-cui-cil-thumb-up class="h-4 w-4" />
+            </a>
           </li>
-          <li>
-            <a href="#"
-               class="group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">Sign
-              Up</a>
-          </li>
-          <li>
-            <a href="#"
-               class="group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">Forgot
-              Password</a>
+          <a href="{{ route('payroll-insentif') }}"
+               class="@if (Route::currentRouteName() === 'payroll-insentif') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
+              <span class="ml-3 flex-1 whitespace-nowrap">Kehadiran</span>
+              <x-cui-cil-calendar-check class="h-4 w-4" />
+            </a>
           </li>
         </ul>
       </li>
