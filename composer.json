@@ -18,6 +18,7 @@
         "livewire/volt": "^1.0",
         "maatwebsite/excel": "^3.1",
         "michaelachrisco/readonly": "^1.0",
+        "power-components/livewire-powergrid": "^5.10",
         "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^7.2",
         "ublabs/blade-coreui-icons": "^0.3.0"
