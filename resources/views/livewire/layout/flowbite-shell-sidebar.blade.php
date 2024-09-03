@@ -27,9 +27,6 @@ new class extends Component {}; ?>
           <span class="ml-3 flex-1 whitespace-nowrap text-left">Bukti Potong</span>
           <x-cui-cil-chevron-circle-down-alt class="size-4" />
         </button>
-        @if (request()->routeIs(['kode', 'satuan', 'vendor', 'tipe-merek', 'tipe', 'merek', 'unit']))
-          display:block;
-        @endif
         <ul id="dropdown-bupot"
             class="@if (request()->routeIs(['bupot-upload', 'bupot-publish'])) space-y-2 py-2 @else hidden space-y-2 py-2 @endif">
           <li>
@@ -66,10 +63,6 @@ new class extends Component {}; ?>
               <span class="ml-3 flex-1 whitespace-nowrap">Personalia</span>
               <x-cui-cil-user class="h-4 w-4" />
             </a>
-          </li>
-          <li>
-            <a href="#"
-               class="group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">Payroll</a>
           </li>
         </ul>
       </li>

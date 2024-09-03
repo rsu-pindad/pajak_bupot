@@ -37,6 +37,9 @@ Route::get('dev-login', function () {
 Route::middleware(['auth'])->group(function () {
     Volt::route('beranda', 'beranda')->name('beranda');
     Volt::route('karyawan-personalia', 'karyawan-personalia')->name('karyawan-personalia');
+    Volt::route('karyawan-payroll-insentif', 'karyawan-payroll-insentif')->name('payroll-insentif');
+
+    
     Route::get('/bukti-potong-upload', ManageTransfers::class)->name('bupot-upload');
     Route::get('/bukti-potong-publish', ManagePublish::class)->name('bupot-publish');
 });
