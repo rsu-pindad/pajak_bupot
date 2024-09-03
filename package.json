@@ -18,6 +18,8 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "canvas-confetti": "^1.9.3"
+        "canvas-confetti": "^1.9.3",
+        "flatpickr": "^4.6.13",
+        "tom-select": "^2.3.1"
     }
 }
