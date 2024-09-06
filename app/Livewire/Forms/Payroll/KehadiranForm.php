@@ -8,6 +8,7 @@ use App\Models\Personalia;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Livewire\Form;
+use YorCreative\UrlShortener\Services\UrlService;
 
 class KehadiranForm extends Form
 {
@@ -76,12 +77,15 @@ class KehadiranForm extends Form
     private function sendBlast($kehadiran, $personalia)
     {
         // $url = action([KehadiranController::class, 'slip-kehadiran'],['user' => $kehadiran->id]);
-        $signedUrl = URL::temporarySignedRoute('slip-kehadiran', now()->addMinutes(10), ['user' => $kehadiran->id]);
+        $signedUrl = URL::temporarySignedRoute('slip-kehadiran', now()->addMinutes(60), ['user' => $kehadiran->id]);
         $otp       = Str::random(4);
 
+        $shortUrl = UrlService::shorten($signedUrl)
+        ->withOpenLimit(2)
+        ->build();
         $pesan = 'Halo sdr/i ' . $kehadiran['nama_pegawai'] . ' berikut slip Tunjangan Kehadiran: ' . PHP_EOL;
         // $pesan .= $url.PHP_EOL;
-        $pesan .= PHP_EOL . $signedUrl . PHP_EOL;
+        $pesan .= PHP_EOL . $shortUrl . PHP_EOL;
         $pesan .= PHP_EOL . 'gunakan otp dibawah untuk membuka dokumen, berlaku 10 menit' . PHP_EOL;
         $pesan .= PHP_EOL . 'OTP : ' . $otp . PHP_EOL;
         $pesan .= PHP_EOL . 'Terimakasih' . PHP_EOL;
