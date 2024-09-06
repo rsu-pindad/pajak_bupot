@@ -2,6 +2,7 @@ import './bootstrap';
 import 'flowbite';
 import confetti from "canvas-confetti";
 import './../../vendor/power-components/livewire-powergrid/dist/tailwind.css';
+import './../../vendor/power-components/livewire-powergrid/dist/powergrid';
 import flatpickr from "flatpickr";
 import 'flatpickr/dist/flatpickr.min.css';
 import "tom-select/dist/css/tom-select.bootstrap5.min.css";

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('status_ptkp');
             $table->string('email');
             $table->string('no_hp');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

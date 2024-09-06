@@ -24,6 +24,11 @@ return new class extends Migration
             $table->double('insentif_kinerja')->default(0)->nullable();
             $table->double('pembulatan')->default(0)->nullable();
             $table->double('diterimakan')->default(0)->nullable();
+            $table->string('insentif_bulan');
+            $table->string('insentif_tahun');
+            $table->boolean('has_blast')->default(false)->nullable();
+            $table->boolean('status_blast')->default(false)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

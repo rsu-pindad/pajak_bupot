@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Imports;
+namespace App\Imports\Karyawan;
 
 use App\Models\Personalia;
 use Maatwebsite\Excel\Concerns\ToModel;
