@@ -24,8 +24,6 @@ class KehadiranController extends Controller
 
     public function view(Request $request)
     {
-        // echo $request->user;
-        // return view('slip-kehadiran');
         $dataKehadiran  = Kehadiran::find($request->user);
         $dataPersonalia = Personalia::where('npp', $dataKehadiran->npp);
         $randomText     = Str::random(4);
