@@ -17,11 +17,14 @@
         "livewire/livewire": "^3.4",
         "livewire/volt": "^1.0",
         "maatwebsite/excel": "^3.1",
+        "mailjet/laravel-mailjet": "^3.1",
         "michaelachrisco/readonly": "^1.0",
+        "openspout/openspout": "^4.24",
         "power-components/livewire-powergrid": "^5.10",
         "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^7.2",
-        "ublabs/blade-coreui-icons": "^0.3.0"
+        "ublabs/blade-coreui-icons": "^0.3.0",
+        "wireui/wireui": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

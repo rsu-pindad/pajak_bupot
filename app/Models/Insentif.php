@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Insentif extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'payroll_insentif';
 
@@ -22,6 +23,8 @@ class Insentif extends Model
         'nilai_kpi',
         'insentif_kinerja',
         'pembulatan',
-        'diterimakan'
+        'diterimakan',
+        'has_blast',
+        'status_blast'
     ];
 }

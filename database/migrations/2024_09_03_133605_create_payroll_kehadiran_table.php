@@ -23,6 +23,11 @@ return new class extends Migration
             $table->double('jumlah_pendapatan')->default(0)->nullable();
             $table->double('jumlah_pembulatan')->default(0)->nullable();
             $table->double('jumlah_diterimakan')->default(0)->nullable();
+            $table->string('kehadiran_bulan');
+            $table->string('kehadiran_tahun');
+            $table->boolean('has_blast')->default(false)->nullable();
+            $table->boolean('status_blast')->default(false)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

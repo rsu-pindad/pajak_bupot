@@ -10,20 +10,27 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Scripts -->
+    <wireui:scripts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>
 
   <body>
     <div class="bg-gray-50 antialiased dark:bg-gray-900">
-      <livewire:layout.flowbite-shell-navbar />
-
+      <livewire:layout.flowbite-shell-navbar wire:key="{{ uniqid() }}" />
+      
       <!-- Sidebar -->
-      <livewire:layout.flowbite-shell-sidebar />
-
+      <livewire:layout.flowbite-shell-sidebar wire:key="{{ uniqid() }}" />
+      
       <main class="h-auto p-4 pt-20 md:ml-64">
-        {{$slot}}
+        <x-wireui-notifications position="top-end" />
+        <x-wireui-dialog />
+        {{ $slot }}
       </main>
     </div>
+    <script type="module">
+      Wireui.hook('load', () => console.log('wireui ok'));
+    </script>
+    @stack('customScript');
   </body>
 
 </html>

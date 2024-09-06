@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Livewire\Volt\Volt;
+use Illuminate\Support\Number;
+use Illuminate\Support\Carbon;
 
 class VoltServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,9 @@ class VoltServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        config(['app.locale' => 'id']);
+        Number::useLocale('id');
+        Carbon::setLocale('id');
         Volt::mount([
             config('livewire.view_path', resource_path('views/livewire')),
             resource_path('views/pages'),

@@ -170,6 +170,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Mailjet\LaravelMailjet\MailjetServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -194,6 +195,7 @@ return [
      */
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'Redis' => Illuminate\Support\Facades\Redis::class, 
+        'Redis'   => Illuminate\Support\Facades\Redis::class,
+        'Mailjet' => Mailjet\LaravelMailjet\Facades\Mailjet::class,
     ])->toArray(),
 ];
