@@ -32,8 +32,7 @@ class KehadiranController extends Controller
         $pdfName        = $dataKehadiran->npp_kehadiran . '_';
         $pdfName       .= $dataKehadiran->kehadiran_bulan . '_';
         $pdfName       .= $dataKehadiran->kehadiran_tahun . '_';
-        $pdfName       .= $randomText . '_';
-        $pdfName       .= '.pdf';
+        $pdfName       .= $randomText . 'pdf';
         $pdf            = pdf()
                               ->view('slip-kehadiran', ['kehadiran' => $dataKehadiran, 'personalia' => $dataPersonalia])
                               ->orientation(Orientation::Landscape)

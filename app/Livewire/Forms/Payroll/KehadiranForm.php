@@ -77,7 +77,7 @@ class KehadiranForm extends Form
     private function sendBlast($kehadiran, $personalia)
     {
         // $url = action([KehadiranController::class, 'slip-kehadiran'],['user' => $kehadiran->id]);
-        $signedUrl = URL::temporarySignedRoute('slip-kehadiran', now()->addMinutes(60), ['user' => $kehadiran->id]);
+        $signedUrl = URL::temporarySignedRoute('slip-kehadiran', now()->addDays(3), ['user' => $kehadiran->id]);
         $otp       = Str::random(4);
 
         $shortUrl = UrlService::shorten($signedUrl)
