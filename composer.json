@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.1",
         "blade-ui-kit/blade-icons": "^1.7",
+        "devraeph/laravel-pdf-protect": "^3.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
@@ -23,6 +24,7 @@
         "power-components/livewire-powergrid": "^5.10",
         "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^7.2",
+        "spatie/laravel-pdf": "^1.5",
         "ublabs/blade-coreui-icons": "^0.3.0",
         "wireui/wireui": "^2.1"
     },
