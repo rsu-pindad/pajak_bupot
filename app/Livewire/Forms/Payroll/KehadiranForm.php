@@ -97,9 +97,10 @@ class KehadiranForm extends Form
                         ->build();
         $pesan = 'Halo sdr/i ' . $kehadiran->nama_pegawai . ' berikut slip Tunjangan Kehadiran: ' . PHP_EOL;
         // $pesan .= $url.PHP_EOL;
-        $pesan .= PHP_EOL . $shortUrl . PHP_EOL;
-        $pesan .= PHP_EOL . 'gunakan otp dibawah untuk membuka dokumen, berlaku 10 menit' . PHP_EOL;
-        $pesan .= PHP_EOL . 'OTP : ' . $otp . PHP_EOL;
+        $pesan .= PHP_EOL . $shortUrl. PHP_EOL;
+        $pesan .= PHP_EOL . 'gunakan otp dibawah untuk membuka dokumen, berlaku 3 Hari' . PHP_EOL;
+        // $pesan .= PHP_EOL . 'Password : ' . $otp . PHP_EOL;
+        $pesan .= PHP_EOL . 'Password = NPP' . $kehadiran->npp_kehadiran . PHP_EOL;
         $pesan .= PHP_EOL . 'Terimakasih' . PHP_EOL;
         $curl   = curl_init();
 
