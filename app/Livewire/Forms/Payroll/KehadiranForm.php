@@ -21,7 +21,7 @@ class KehadiranForm extends Form
             // $cariPersonalia = Personalia::where('npp', $cariKehadiran->npp_kehadiran)->first();
             // $sendBlast      = json_decode($this->sendBlast($cariKehadiran, $cariPersonalia), true);
             $cariKehadiran = Kehadiran::find($rowId)->first();
-            $sendBlast = json_decode($this->sendBlast($cariKehadiran, null), true);
+            $sendBlast     = json_decode($this->sendBlast($cariKehadiran, null, 'Kehadiran'), true);
             // "{
             // "detail":"success! message in queue",
             // "id":["57481122"],
@@ -40,6 +40,7 @@ class KehadiranForm extends Form
             } else {
                 $detail = $sendBlast['reason'];
             }
+
             return $detail;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -53,7 +54,7 @@ class KehadiranForm extends Form
             // $cariPersonalia = Personalia::where('npp', $cariKehadiran->npp_kehadiran)->first();
             // $sendBlast      = json_decode($this->sendBlast($cariKehadiran, $cariPersonalia), true);
             $cariKehadiran = Kehadiran::find($rowId)->first();
-            $sendBlast     = json_decode($this->sendBlast($cariKehadiran, null), true);
+            $sendBlast     = json_decode($this->sendBlast($cariKehadiran, null, 'Kehadiran'), true);
             $status        = $sendBlast['status'];
             $detail        = '';
             if ($status == true) {
@@ -86,7 +87,7 @@ class KehadiranForm extends Form
         Kehadiran::withTrashed()->where('id', $rowId)->forceDelete();
     }
 
-    private function sendBlast($kehadiran, $personalia)
+    private function sendBlast($kehadiran, $personalia, $judulDokumen)
     {
         // $url = action([KehadiranController::class, 'slip-kehadiran'],['user' => $kehadiran->id]);
         $signedUrl = URL::temporarySignedRoute('slip-kehadiran', now()->addDays(3), ['user' => $kehadiran->id]);
@@ -95,12 +96,12 @@ class KehadiranForm extends Form
         $shortUrl = UrlService::shorten($signedUrl)
                         ->withOpenLimit(2)
                         ->build();
-        $pesan = 'Halo sdr/i ' . $kehadiran->nama_pegawai . ' berikut slip Tunjangan Kehadiran: ' . PHP_EOL;
+        $pesan = 'Halo sdr/i ' . $kehadiran->nama_pegawai . ' berikut slip Tunjangan ' . $judulDokumen . ': ' . PHP_EOL;
         // $pesan .= $url.PHP_EOL;
-        $pesan .= PHP_EOL . $shortUrl. PHP_EOL;
+        $pesan .= PHP_EOL . $shortUrl . PHP_EOL;
         $pesan .= PHP_EOL . 'gunakan otp dibawah untuk membuka dokumen, berlaku 3 Hari' . PHP_EOL;
         // $pesan .= PHP_EOL . 'Password : ' . $otp . PHP_EOL;
-        $pesan .= PHP_EOL . 'Password = NPP'. PHP_EOL;
+        $pesan .= PHP_EOL . 'Password = NPP' . PHP_EOL;
         $pesan .= PHP_EOL . 'Terimakasih' . PHP_EOL;
         $pesan .= PHP_EOL . '' . PHP_EOL;
         $pesan .= PHP_EOL . '* disarankan membuka tautan diatas menggunakan chrome' . PHP_EOL;
