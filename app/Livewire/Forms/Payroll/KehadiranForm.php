@@ -100,8 +100,10 @@ class KehadiranForm extends Form
         $pesan .= PHP_EOL . $shortUrl. PHP_EOL;
         $pesan .= PHP_EOL . 'gunakan otp dibawah untuk membuka dokumen, berlaku 3 Hari' . PHP_EOL;
         // $pesan .= PHP_EOL . 'Password : ' . $otp . PHP_EOL;
-        $pesan .= PHP_EOL . 'Password = NPP' . $kehadiran->npp_kehadiran . PHP_EOL;
+        $pesan .= PHP_EOL . 'Password = NPP'. PHP_EOL;
         $pesan .= PHP_EOL . 'Terimakasih' . PHP_EOL;
+        $pesan .= PHP_EOL . '' . PHP_EOL;
+        $pesan .= PHP_EOL . '* disarankan membuka tautan diatas menggunakan chrome' . PHP_EOL;
         $curl   = curl_init();
 
         curl_setopt_array($curl, array(
