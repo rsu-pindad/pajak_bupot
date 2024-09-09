@@ -19,14 +19,16 @@ class KehadiranImport implements ToModel, WithHeadingRow, WithCalculatedFormulas
     use RemembersRowNumber;
 
     protected $heading;
-    protected $bulan;
+    protected $bulan_periode;
+    protected $bulan_pembayaran;
     protected $tahun;
 
-    public function __construct(int $heading, $bulan, $tahun)
+    public function __construct(int $heading, $bulan_periode, $bulan_pembayaran, $tahun)
     {
-        $this->heading = $heading;
-        $this->bulan   = $bulan;
-        $this->tahun   = $tahun;
+        $this->heading          = $heading;
+        $this->bulan_periode    = $bulan_periode;
+        $this->bulan_pembayaran = $bulan_pembayaran;
+        $this->tahun            = $tahun;
     }
 
     public function startRow(): int
@@ -42,22 +44,25 @@ class KehadiranImport implements ToModel, WithHeadingRow, WithCalculatedFormulas
     public function model(array $row)
     {
         // HeadingRowFormatter::default('none');
-        // dd($row);
         $currentRowNumber = $this->getRowNumber();
 
         return new Kehadiran([
-            'npp_kehadiran'       => $row['n_p_k'],
-            'nama_pegawai'        => $row['nama_pegawai'],
-            'tunjangan_kehadiran' => $row['tunjangan_kehadiran'],
-            'jumlah_hari_kerja'   => $row['jumlah_hari_kerja'],
-            'jumlah_jam_terbuang' => $row['jumlah_jam_terbuang'],
-            'jumlah_cuti'         => $row['jumlah_cuti'],
-            'potongan_absensi'    => $row['potongan_absensi'],
-            'jumlah_pendapatan'   => $row['jumlah_pendapatan'],
-            'jumlah_pembulatan'   => $row['jumlah_pembulatan'],
-            'jumlah_diterimakan'  => $row['jumlah_diterimakan'],
-            'kehadiran_bulan'     => $this->bulan,
-            'kehadiran_tahun'     => $this->tahun,
+            'npp_kehadiran'              => $row['n_p_k'],
+            'nama_pegawai'               => $row['nama_pegawai'],
+            'status_pegawai'             => $row['status_karyawan'],
+            'tunjangan_kehadiran'        => $row['tunjangan_kehadiran'],
+            'jumlah_hari_kerja'          => $row['jumlah_hari_kerja'],
+            'jumlah_jam_terbuang'        => $row['jumlah_jam_terbuang'],
+            'jumlah_cuti'                => $row['jumlah_cuti'],
+            'potongan_absensi'           => $row['potongan_absensi'],
+            'jumlah_pendapatan'          => $row['jumlah_pendapatan'],
+            'jumlah_pembulatan'          => $row['jumlah_pembulatan'],
+            'jumlah_diterimakan'         => $row['jumlah_diterimakan'],
+            'kehadiran_periode_bulan'    => $this->bulan_periode,
+            'kehadiran_pembayaran_bulan' => $this->bulan_pembayaran,
+            'kehadiran_tahun'            => $this->tahun,
+            'no_hp'                      => $row['handphone_karyawan'],
+            'email'                      => $row['email_karyawan']
         ]);
     }
 

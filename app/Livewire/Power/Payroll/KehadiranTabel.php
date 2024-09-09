@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Power\Payroll;
 
+use App\Enums\Bulan;
 use App\Models\Kehadiran;
 use App\Models\Personalia;
 use Illuminate\Database\Eloquent\Builder;
@@ -91,6 +92,7 @@ final class KehadiranTabel extends PowerGridComponent
             // ->queues(3)
             Header::make()
                 ->showToggleColumns()
+                ->withoutLoading()
                 ->showSoftDeletes(showMessage: false),
             Footer::make()
                 ->showPerPage(perPage: 5, perPageValues: [5, 25, 50, 100, 500])
@@ -114,6 +116,8 @@ final class KehadiranTabel extends PowerGridComponent
                    ->add('id')
                    ->add('npp_kehadiran')
                    ->add('nama_pegawai')
+                   ->add('no_hp')
+                   ->add('email')
                    ->add('tunjangan_kehadiran')
                    ->add('jumlah_hari_kerja')
                    ->add('jumlah_jam_terbuang')
@@ -122,7 +126,8 @@ final class KehadiranTabel extends PowerGridComponent
                    ->add('jumlah_pendapatan')
                    ->add('jumlah_pembulatan')
                    ->add('jumlah_diterimakan')
-                   ->add('kehadiran_bulan')
+                   ->add('kehadiran_periode_bulan', fn($kehadiran)    => Bulan::from($kehadiran->kehadiran_periode_bulan)->labels())
+                   ->add('kehadiran_pembayaran_bulan', fn($kehadiran) => Bulan::from($kehadiran->kehadiran_pembayaran_bulan)->labels())
                    ->add('kehadiran_tahun')
                    ->add('has_blast')
                    ->add('has_blast_label', function ($kehadiran) {
@@ -144,7 +149,9 @@ final class KehadiranTabel extends PowerGridComponent
                 ->visibleInExport(true),
             Column::make('Tahun', 'kehadiran_tahun')
                 ->sortable(),
-            Column::make('Bulan', 'kehadiran_bulan')
+            Column::make('Periode Bulan', 'kehadiran_periode_bulan')
+                ->sortable(),
+            Column::make('Pembayaran Bulan', 'kehadiran_pembayaran_bulan')
                 ->sortable(),
             Column::make('Npp', 'npp_kehadiran')
                 ->sortable()
@@ -152,6 +159,8 @@ final class KehadiranTabel extends PowerGridComponent
             Column::make('Nama', 'nama_pegawai')
                 ->sortable()
                 ->searchable(),
+            Column::make('No Hp', 'no_hp'),
+            Column::make('Email', 'email'),
             Column::make('Tunjangan', 'tunjangan_kehadiran')
                 ->sortable(),
             Column::make('Jumlah hari kerja', 'jumlah_hari_kerja')
@@ -194,6 +203,16 @@ final class KehadiranTabel extends PowerGridComponent
         return [
             Filter::inputText('npp_kehadiran')->placeholder('cari npp'),
             Filter::inputText('nama_pegawai')->placeholder('cari nama'),
+            Filter::enumSelect('kehadiran_periode_bulan', 'kehadiran_periode_bulan')
+                ->dataSource(Bulan::cases())
+                ->optionLabel('kehadiran_periode_bulan'),
+            Filter::enumSelect('kehadiran_pembayaran_bulan', 'kehadiran_pembayaran_bulan')
+                ->dataSource(Bulan::cases())
+                ->optionLabel('kehadiran_pembayaran_bulan'),
+            FIlter::boolean('has_blast', 'has_blast')
+                ->label('Iya', 'Belum'),
+            FIlter::boolean('status_blast', 'status_blast')
+                ->label('Terkirim', 'Belum'),
         ];
     }
 
@@ -236,10 +255,11 @@ final class KehadiranTabel extends PowerGridComponent
                 $cariKehadiran = Kehadiran::whereIn('id', Arr::flatten($this->checkboxValues))->get();
                 // $cariPersonalia = Personalia::whereIn('npp', $cariKehadiran->npp_kehadiran);
                 // dd($cariKehadiran);
+                // dd($cariKehadiran);
                 foreach ($cariKehadiran as $kehadiran) {
                     // dd($kehadiran->npp_kehadiran);
                     // $cariPersonalia = Personalia::where('npp', $kehadiran->npp_kehadiran)->first();
-                    $this->dispatch('infoBulkBlast',rowId:  $kehadiran->id);
+                    $this->dispatch('infoBulkBlast', rowId: $kehadiran->id);
                     sleep(2);
                 }
                 // $cariKehadiran  = Kehadiran::find($rowId)->first();

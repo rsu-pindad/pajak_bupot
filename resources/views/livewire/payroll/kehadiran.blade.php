@@ -21,7 +21,10 @@ class extends Component {
     public $fileUpload;
 
     #[Validate('required')]
-    public $bulanInsentif;
+    public $bulanPeriodeInsentif;
+    
+    #[Validate('required')]
+    public $bulanPembayaranInsentif;
 
     #[Validate('required')]
     public $tahunInsentif = '';
@@ -34,7 +37,8 @@ class extends Component {
     {
       setlocale(LC_ALL, 'IND');
       for ($m=1; $m<=12; $m++) {
-        $this->bulan[] = Carbon::parse(date('F', mktime(0,0,0,$m, 1, date('Y'))))->formatLocalized('%B');
+        // $this->bulan[] = Carbon::parse(date('F', mktime(0,0,0,$m, 1, date('Y'))))->formatLocalized('%B');
+        $this->bulan[] = date('F', mktime(0,0,0,$m, 1, date('Y')));
       }
     }
 
@@ -42,7 +46,7 @@ class extends Component {
     {
         $this->validate();
         try {
-            $import = new SelectSheetImport($this->bulanInsentif, $this->tahunInsentif);
+            $import = new SelectSheetImport($this->bulanPeriodeInsentif, $this->bulanPembayaranInsentif, $this->tahunInsentif);
             $import->onlySheets('tj kehadiran');
 
             $excelImport = Excel::import($import, $this->fileUpload->path());
@@ -101,28 +105,40 @@ class extends Component {
 }; ?>
 
 <div class="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-1">
-  <div class="h-24 overflow-x-auto rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-48">
-
+  <div class="h-auto overflow-x-auto rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
     <div class="p-6">
-      <div>
-        <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-               for="file_input">Unggah Berkas</label>
-        <input id="file_input"
-               wire:model="fileUpload"
-               class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-               aria-describedby="file_input_help"
-               type="file">
-        <p id="file_input_help"
-           class="mt-1 text-sm text-gray-500 dark:text-gray-300">tipe file : xlsx, xls</p>
-      </div>
-
-      <div class="mt-4 grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+      
+      <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-subgrid gap-4 col-span-2">
+          <div class="col-start-1">
+            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+                  for="file_input">Unggah Berkas
+            </label>
+            <input id="file_input"
+                  wire:model="fileUpload"
+                  class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+                  aria-describedby="file_input_help"
+                  type="file">
+            <p id="file_input_help"
+              class="mt-1 text-sm text-gray-500 dark:text-gray-300">tipe file : xlsx, xls
+            </p>
+          </div>
+        </div>
         <div>
-          <label for="bulan_insentif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Insentif Kehadiran</label>
-          <select wire:model="bulanInsentif" id="bulan_insentif" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option hidden>Pilih Bulan Insentif Kehadiran</option>
+          <label for="bulan_periode_insentif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Periode Insentif Kehadiran</label>
+          <select wire:model="bulanPeriodeInsentif" id="bulan_periode_insentif" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option hidden>Pilih Bulan Periode Insentif Kehadiran</option>
             @foreach ($this->bulan as $bulan)
-              <option value="{{$bulan}}">{{$bulan}}</option>
+              <option value="{{Carbon::parse($bulan)->format('m')}}">{{Carbon::parse($bulan)->formatLocalized('%B')}}</option>
+            @endforeach
+          </select>
+        </div>
+        <div>
+          <label for="bulan_pembayaran_insentif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Pembayaran Insentif Kehadiran</label>
+          <select wire:model="bulanPembayaranInsentif" id="bulan_pembayaran_insentif" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option hidden>Pilih Bulan Pembayaran Insentif Kehadiran</option>
+            @foreach ($this->bulan as $bulan)
+              <option value="{{Carbon::parse($bulan)->format('m')}}">{{Carbon::parse($bulan)->formatLocalized('%B')}}</option>
             @endforeach
           </select>
         </div>
@@ -145,7 +161,7 @@ class extends Component {
   </div>
   <div class="h-64 overflow-x-hidden rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
     <div class="p-6">
-      <livewire:power.payroll.kehadiran-tabel />
+      <livewire:power.payroll.kehadiran-tabel lazy wire:key="{{ uniqid() }}"/>
     </div>
   </div>
 </div>

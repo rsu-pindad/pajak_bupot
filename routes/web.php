@@ -46,9 +46,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bukti-potong-upload', ManageTransfers::class)->name('bupot-upload');
     Route::get('/bukti-potong-publish', ManagePublish::class)->name('bupot-publish');
     
-    Route::get('/slip-kehadiran/{user}' , [KehadiranController::class, 'view'])->name('slip-kehadiran');
-
 });
+
+Route::get('/slip-kehadiran/{user}' , [KehadiranController::class, 'view'])->name('slip-kehadiran');
 
 
 

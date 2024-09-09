@@ -10,19 +10,21 @@ class SelectSheetImport implements WithMultipleSheets
 {
     use WithConditionalSheets;
 
-    protected $bulan;
+    protected $bulan_periode;
+    protected $bulan_pembayaran;
     protected $tahun;
 
-    public function __construct($bulan, $tahun)
+    public function __construct($bulan_periode, $bulan_pembayaran, $tahun)
     {
-        $this->bulan = $bulan;
-        $this->tahun = $tahun;
+        $this->bulan_periode    = $bulan_periode;
+        $this->bulan_pembayaran = $bulan_pembayaran;
+        $this->tahun            = $tahun;
     }
 
     public function conditionalSheets(): array
     {
         return [
-            'tj kehadiran' => new KehadiranImport(5, $this->bulan, $this->tahun),
+            'tj kehadiran' => new KehadiranImport(5, $this->bulan_periode, $this->bulan_pembayaran, $this->tahun),
         ];
     }
 }

@@ -17,9 +17,11 @@ class KehadiranForm extends Form
     public function blast($rowId)
     {
         try {
-            $cariKehadiran  = Kehadiran::find($rowId)->first();
-            $cariPersonalia = Personalia::where('npp', $cariKehadiran->npp_kehadiran)->first();
-            $sendBlast      = json_decode($this->sendBlast($cariKehadiran, $cariPersonalia), true);
+            // $cariKehadiran  = Kehadiran::find($rowId)->first();
+            // $cariPersonalia = Personalia::where('npp', $cariKehadiran->npp_kehadiran)->first();
+            // $sendBlast      = json_decode($this->sendBlast($cariKehadiran, $cariPersonalia), true);
+            $cariKehadiran = Kehadiran::find($rowId)->first();
+            $sendBlast = json_decode($this->sendBlast($cariKehadiran, null), true);
             // "{
             // "detail":"success! message in queue",
             // "id":["57481122"],
@@ -27,14 +29,17 @@ class KehadiranForm extends Form
             // "status":true,
             // "target":["62818831140"]
             // }
+            // dd($sendBlast);
             $status = $sendBlast['status'];
-            $detail = $sendBlast['detail'];
-
-            // if ($status == true) {
-            //     // $cariKehadiran->has_blast    = true;
-            //     // $cariKehadiran->status_blast = true;
-            //     // $cariKehadiran->save();
-            // }
+            $detail = '';
+            if ($status == true) {
+                $cariKehadiran->has_blast    = true;
+                $cariKehadiran->status_blast = true;
+                $cariKehadiran->save();
+                $detail = $sendBlast['detail'];
+            } else {
+                $detail = $sendBlast['reason'];
+            }
             return $detail;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -44,16 +49,23 @@ class KehadiranForm extends Form
     public function bulkBlast($rowId)
     {
         try {
-            $cariKehadiran  = Kehadiran::find($rowId)->first();
-            $cariPersonalia = Personalia::where('npp', $cariKehadiran->npp_kehadiran)->first();
-            $sendBlast      = json_decode($this->sendBlast($cariKehadiran, $cariPersonalia), true);
-            $status         = $sendBlast['status'];
-            $detail         = $sendBlast['detail'];
+            // $cariKehadiran  = Kehadiran::find($rowId)->first();
+            // $cariPersonalia = Personalia::where('npp', $cariKehadiran->npp_kehadiran)->first();
+            // $sendBlast      = json_decode($this->sendBlast($cariKehadiran, $cariPersonalia), true);
+            $cariKehadiran = Kehadiran::find($rowId)->first();
+            $sendBlast     = json_decode($this->sendBlast($cariKehadiran, null), true);
+            $status        = $sendBlast['status'];
+            $detail        = '';
             if ($status == true) {
-                // $cariKehadiran->has_blast    = true;
-                // $cariKehadiran->status_blast = true;
-                // $cariKehadiran->save();
+                $cariKehadiran->has_blast    = true;
+                $cariKehadiran->status_blast = true;
+                $cariKehadiran->save();
+                $detail = $sendBlast['detail'];
+            } else {
+                $detail = $sendBlast['reason'];
             }
+
+            return $detail;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
@@ -81,9 +93,9 @@ class KehadiranForm extends Form
         $otp       = Str::random(4);
 
         $shortUrl = UrlService::shorten($signedUrl)
-        ->withOpenLimit(2)
-        ->build();
-        $pesan = 'Halo sdr/i ' . $kehadiran['nama_pegawai'] . ' berikut slip Tunjangan Kehadiran: ' . PHP_EOL;
+                        ->withOpenLimit(2)
+                        ->build();
+        $pesan = 'Halo sdr/i ' . $kehadiran->nama_pegawai . ' berikut slip Tunjangan Kehadiran: ' . PHP_EOL;
         // $pesan .= $url.PHP_EOL;
         $pesan .= PHP_EOL . $shortUrl . PHP_EOL;
         $pesan .= PHP_EOL . 'gunakan otp dibawah untuk membuka dokumen, berlaku 10 menit' . PHP_EOL;
@@ -101,7 +113,8 @@ class KehadiranForm extends Form
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'target'      => $personalia['no_hp'],
+                // 'target'      => $personalia['no_hp'],
+                'target'      => $kehadiran->no_hp,
                 'message'     => $pesan,
                 'delay'       => '5',
                 'countryCode' => '62',

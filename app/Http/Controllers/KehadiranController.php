@@ -37,16 +37,18 @@ class KehadiranController extends Controller
                               ->format(Format::A5)
                               ->margins(2, 2, 2, 2)
                               ->disk('public')
-                              ->save($pdfName);
+                              ->name($pdfName);
+                            //   ->save($pdfName);
 
-        PDFPasswordProtect::setInputFile($pdfName, 'public')
-            ->setOutputFile('slip_kehadiran/' . $pdfName, 'public')
-            ->setFormat('A5')
-            ->setOwnerPassword('RSUPINDAD2024')
-            ->setPassword('1234')
-            ->secure();
-        Storage::disk('public')->delete($pdfName);
+        // PDFPasswordProtect::setInputFile($pdfName, 'public')
+            // ->setOutputFile('slip_kehadiran/' . $pdfName, 'public')
+            // ->setFormat('A5')
+            // ->setOwnerPassword('RSUPINDAD2024')
+            // ->setPassword('1234')
+            // ->secure();
+        // Storage::disk('public')->delete($pdfName);
 
-        return Storage::disk('public')->download('slip_kehadiran/' . $pdfName);
+        // return Storage::disk('public')->download('slip_kehadiran/' . $pdfName);
+        return $pdf;
     }
 }

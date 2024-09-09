@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class Kehadiran extends Model
 {
@@ -17,6 +17,9 @@ class Kehadiran extends Model
     protected $fillable = [
         'npp_kehadiran',
         'nama_pegawai',
+        'status_pegawai',
+        'no_hp',
+        'email',
         'tunjangan_kehadiran',
         'jumlah_hari_kerja',
         'jumlah_jam_terbuang',
@@ -25,7 +28,8 @@ class Kehadiran extends Model
         'jumlah_pendapatan',
         'jumlah_pembulatan',
         'jumlah_diterimakan',
-        'kehadiran_bulan',
+        'kehadiran_periode_bulan',
+        'kehadiran_pembayaran_bulan',
         'kehadiran_tahun',
         'has_blast',
         'status_blast'
