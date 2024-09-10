@@ -25,6 +25,7 @@
         "predis/predis": "^2.2",
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-pdf": "^1.5",
+        "spatie/laravel-permission": "^6.9",
         "ublabs/blade-coreui-icons": "^0.3.0",
         "wireui/wireui": "^2.1",
         "yorcreative/laravel-urlshortener": "^2.1"

@@ -3,9 +3,9 @@
 use App\Http\Controllers\KehadiranController;
 use App\Livewire\ManagePublish;
 use App\Livewire\ManageTransfers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
-use Illuminate\Http\Request;
 
 /*
  * |--------------------------------------------------------------------------
@@ -18,13 +18,11 @@ use Illuminate\Http\Request;
  * |
  */
 
-Route::view('/', 'welcome');
+Volt::route('/', 'pages.auth.login')
+    ->name('login')
+    ->middleware(['guest']);
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
-Route::view('profile', 'profile')
+Volt::route('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
@@ -45,11 +43,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/bukti-potong-upload', ManageTransfers::class)->name('bupot-upload');
     Route::get('/bukti-potong-publish', ManagePublish::class)->name('bupot-publish');
-    
 });
 
-Route::get('/slip-kehadiran/{user}' , [KehadiranController::class, 'view'])->name('slip-kehadiran');
-
-
+Route::get('/slip-kehadiran/{user}', [KehadiranController::class, 'view'])->name('slip-kehadiran');
 
 require __DIR__ . '/auth.php';

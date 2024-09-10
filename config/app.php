@@ -200,4 +200,5 @@ return [
     ])->toArray(),
 
     'FONNTE' => env('FONNTE_TOKEN', ''),
+    'seeder_default' => env('SEED_DEFAULT_PASSWORD', ''),
 ];
