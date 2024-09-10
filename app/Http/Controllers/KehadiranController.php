@@ -37,7 +37,6 @@ class KehadiranController extends Controller
                               ->format(Format::A5)
                               ->margins(2, 2, 2, 2)
                               ->disk('public')
-                            //   ->name('xxxx.pdf');
                               ->save($pdfName);
 
         PDFPasswordProtect::setInputFile($pdfName, 'public')
@@ -48,13 +47,7 @@ class KehadiranController extends Controller
             ->secure();
         Storage::disk('public')->delete($pdfName);
 
-        // $tempFile = Storage::disk('public')->temporaryUrl('slip_kehadiran/', now()->addMinutes(1));
-        // $pathFile = Storage::disk('public')->files('slip_kehadiran');
         $pathFile = Storage::disk('public')->path('slip_kehadiran/'.$pdfName);
-        // dd($pathFile);
-        // return $pathFile;
         return response()->download($pathFile)->deleteFileAfterSend();
-        // return Storage::disk('public')->download('slip_kehadiran/' . $pdfName);
-        // return $pdf;
     }
 }
