@@ -37,10 +37,8 @@ class KehadiranController extends Controller
                               ->format(Format::A5)
                               ->margins(2, 2, 2, 2)
                               ->disk('public')
-                              ->name('xxxx.pdf');
-                            //   ->save($pdfName);
-
-        return $pdf;
+                            //   ->name('xxxx.pdf');
+                              ->save($pdfName);
 
         PDFPasswordProtect::setInputFile($pdfName, 'public')
             ->setOutputFile('slip_kehadiran/' . $pdfName, 'public')
