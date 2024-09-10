@@ -19,7 +19,6 @@ use Livewire\Volt\Volt;
  */
 
 Volt::route('/', 'pages.auth.login')
-    ->name('login')
     ->middleware(['guest']);
 
 Volt::route('profile', 'profile')
