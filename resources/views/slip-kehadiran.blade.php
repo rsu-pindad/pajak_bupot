@@ -9,10 +9,9 @@
     <title>Slip Kehadiran</title>
 
     <!-- Fonts -->
-    <link rel="preconnect"
-          href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap"
-          rel="stylesheet" />
+    <link rel="stylesheet"
+          type="text/css"
+          href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
     <style>
       .watermark {
         -webkit-transform: rotate(331deg);
@@ -22,7 +21,7 @@
         font-size: 8em;
         color: rgba(112, 112, 112, 0.151);
         position: fixed;
-        font-family: 'serif', sans-serif;
+        font-family: Ubuntu, sans-serif;
         text-transform: uppercase;
         padding-left: 10%;
         padding-top: 10%;
@@ -32,7 +31,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
-        font-family: 'serif', sans-serif;
+        font-family: Ubuntu, sans-serif;
       }
     </style>
 
@@ -85,7 +84,7 @@
         </div>
       </div>
       <div class="grid grid-cols-2 gap-2">
-        <div class="grid grid-cols-4 text-sm">
+        <div class="grid grid-cols-4 gap-2 text-sm">
           <div class="grid-cols-subgrid col-span-4 grid">
             <div class="col-span-4 col-start-1">
               <p class="inline-block font-bold">A. KOMPONEN PERHITUNGAN KEHADIRAN</p>
@@ -136,7 +135,7 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-4 text-sm">
+        <div class="grid grid-cols-4 gap-2 text-sm">
           <div class="grid-cols-subgrid col-span-4 grid">
             <div class="col-span-4 col-start-1">
               <p class="inline-block font-bold">B. PERHITUNGAN KEHADIRAN</p>
