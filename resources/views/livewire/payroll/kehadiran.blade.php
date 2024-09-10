@@ -21,13 +21,13 @@ class extends Component {
     public $fileUpload;
 
     #[Validate('required')]
-    public $bulanPeriodeInsentif;
+    public $bulanPeriodeKehadiran;
     
     #[Validate('required')]
-    public $bulanPembayaranInsentif;
+    public $bulanPembayaranKehadiran;
 
     #[Validate('required')]
-    public $tahunInsentif = '';
+    public $tahunKehadiran = '';
 
     public $bulan = [];
 
@@ -46,7 +46,7 @@ class extends Component {
     {
         $this->validate();
         try {
-            $import = new SelectSheetImport($this->bulanPeriodeInsentif, $this->bulanPembayaranInsentif, $this->tahunInsentif);
+            $import = new SelectSheetImport($this->bulanPeriodeKehadiran, $this->bulanPembayaranKehadiran, $this->tahunKehadiran);
             $import->onlySheets('tj kehadiran');
 
             $excelImport = Excel::import($import, $this->fileUpload->path());
@@ -125,26 +125,26 @@ class extends Component {
           </div>
         </div>
         <div>
-          <label for="bulan_periode_insentif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Periode Insentif Kehadiran</label>
-          <select wire:model="bulanPeriodeInsentif" id="bulan_periode_insentif" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option hidden>Pilih Bulan Periode Insentif Kehadiran</option>
+          <label for="bulan_periode_kehadiran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Periode Kehadiran</label>
+          <select wire:model="bulanPeriodeKehadiran" id="bulan_periode_kehadiran" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option hidden>Pilih Bulan Periode Kehadiran</option>
             @foreach ($this->bulan as $bulan)
               <option value="{{Carbon::parse($bulan)->format('m')}}">{{Carbon::parse($bulan)->formatLocalized('%B')}}</option>
             @endforeach
           </select>
         </div>
         <div>
-          <label for="bulan_pembayaran_insentif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Pembayaran Insentif Kehadiran</label>
-          <select wire:model="bulanPembayaranInsentif" id="bulan_pembayaran_insentif" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option hidden>Pilih Bulan Pembayaran Insentif Kehadiran</option>
+          <label for="bulan_pembayaran_kehadiran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Pembayaran Kehadiran</label>
+          <select wire:model="bulanPembayaranKehadiran" id="bulan_pembayaran_kehadiran" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option hidden>Pilih Bulan Pembayaran Kehadiran</option>
             @foreach ($this->bulan as $bulan)
               <option value="{{Carbon::parse($bulan)->format('m')}}">{{Carbon::parse($bulan)->formatLocalized('%B')}}</option>
             @endforeach
           </select>
         </div>
         <div>
-          <label for="tahun_insentif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Masukan Tahun Insentif Kehadiran</label>
-          <input wire:model="tahunInsentif" placeholder="{{Carbon::now()->format('Y')}}" type="text" id="tahun_insentif" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <label for="tahun_insentif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Masukan Tahun Kehadiran</label>
+          <input wire:model="tahunKehadiran" placeholder="{{Carbon::now()->format('Y')}}" type="text" id="tahun_insentif" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
       </div>
 

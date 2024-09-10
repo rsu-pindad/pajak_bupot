@@ -243,6 +243,12 @@ final class KehadiranTabel extends PowerGridComponent
                 ->id()
                 ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
                 ->dispatch('infoBlast', ['rowId' => $row->id]),
+            Button::add('repeat')
+                ->slot('<x-cui-cib-whatsapp class="w-4 h-4" />')
+                ->tooltip('Ulangi Blast Ke Wa')
+                ->id()
+                ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
+                ->dispatch('infoBlast', ['rowId' => $row->id]),
         ];
     }
 
@@ -299,7 +305,7 @@ final class KehadiranTabel extends PowerGridComponent
     {
         return [
             Rule::button('hapus')
-                ->when(fn(Kehadiran $kehadiran) => $kehadiran->trashed() == true)
+                ->when(fn(Kehadiran $kehadiran) => $kehadiran->trashed() == true || $kehadiran->has_blast == true)
                 ->hide(),
             Rule::button('bulk-delete')
                 ->when(fn(Kehadiran $kehadiran) => $kehadiran->trashed() == false)
@@ -312,6 +318,9 @@ final class KehadiranTabel extends PowerGridComponent
                 ->hide(),
             Rule::button('blast')
                 ->when(fn(Kehadiran $kehadiran) => $kehadiran->trashed() == true || $kehadiran->has_blast == true)
+                ->hide(),
+            Rule::button('repeat')
+                ->when(fn(Kehadiran $kehadiran) => $kehadiran->has_blast == false || $kehadiran->status_blast == false)
                 ->hide(),
             Rule::checkbox()
                 ->when(fn(Kehadiran $kehadiran) => $kehadiran->trashed() == true)
