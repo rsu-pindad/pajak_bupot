@@ -13,6 +13,10 @@
           type="text/css"
           href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
     <style>
+      body {
+        font-family: Ubuntu, sans-serif;
+      }
+
       .watermark {
         -webkit-transform: rotate(331deg);
         -moz-transform: rotate(331deg);
@@ -29,11 +33,6 @@
     </style>
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      body {
-        font-family: Ubuntu, sans-serif;
-      }
-    </style>
 
     @vite(['resources/css/app.css'])
   </head>
@@ -83,15 +82,15 @@
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-2">
-        <div class="grid grid-cols-4 gap-2 text-sm">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-4 text-sm">
           <div class="grid-cols-subgrid col-span-4 grid">
             <div class="col-span-4 col-start-1">
               <p class="inline-block font-bold">A. KOMPONEN PERHITUNGAN KEHADIRAN</p>
             </div>
           </div>
           <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-nowrap col-span-2 col-start-1 text-left">
+            <div class="text-wrap col-span-2 col-start-1 text-left">
               <div class="text-gray-700">TUNJANGAN KEHADIRAN</div>
             </div>
             <div>
@@ -102,7 +101,7 @@
             </div>
           </div>
           <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-nowrap col-span-2 col-start-1 text-left">
+            <div class="text-wrap col-span-2 col-start-1 text-left">
               <div class="text-gray-700">JUMLAH HARI KERJA</div>
             </div>
             <div>
@@ -113,7 +112,7 @@
             </div>
           </div>
           <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-nowrap col-span-2 col-start-1 text-left">
+            <div class="text-wrap col-span-2 col-start-1 text-left">
               <div class="text-gray-700">JUMLAH JAM TERBUANG</div>
             </div>
             <div>
@@ -124,7 +123,7 @@
             </div>
           </div>
           <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-nowrap col-span-2 col-start-1 text-left">
+            <div class="text-wrap col-span-2 col-start-1 text-left">
               <div class="text-gray-700">JUMLAH CUTI / SAKIT </div>
             </div>
             <div>
@@ -135,14 +134,14 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-4 gap-2 text-sm">
+        <div class="grid grid-cols-4 text-sm">
           <div class="grid-cols-subgrid col-span-4 grid">
             <div class="col-span-4 col-start-1">
               <p class="inline-block font-bold">B. PERHITUNGAN KEHADIRAN</p>
             </div>
           </div>
           <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-nowrap col-span-2 col-start-1 text-left">
+            <div class="text-wrap col-span-2 col-start-1 text-left">
               <div class="text-gray-700">POTONGAN ABSENSI</div>
             </div>
             <div>
@@ -153,7 +152,7 @@
             </div>
           </div>
           <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-nowrap col-span-2 col-start-1 text-left">
+            <div class="text-wrap col-span-2 col-start-1 text-left">
               <div class="text-gray-700">JUMLAH PENDAPATAN</div>
             </div>
             <div>
@@ -164,7 +163,7 @@
             </div>
           </div>
           <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-nowrap col-span-2 col-start-1 text-left">
+            <div class="text-wrap col-span-2 col-start-1 text-left">
               <div class="text-gray-700">PEMBULATAN</div>
             </div>
             <div>
@@ -175,7 +174,7 @@
             </div>
           </div>
           <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-nowrap col-span-2 col-start-1 text-left">
+            <div class="text-wrap col-span-2 col-start-1 text-left">
               <div class="font-bold text-gray-700">DITERIMAKAN</div>
             </div>
             <div>
