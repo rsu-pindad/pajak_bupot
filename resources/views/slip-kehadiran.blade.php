@@ -84,8 +84,8 @@
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-5">
-        <div class="grid grid-cols-4 gap-3 text-sm">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-4 gap-2 text-sm">
           <div class="grid-cols-subgrid col-span-4 grid">
             <div class="col-span-4 col-start-1">
               <p class="inline-block font-bold">A. KOMPONEN PERHITUNGAN KEHADIRAN</p>
@@ -136,7 +136,7 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-4 gap-3 text-sm">
+        <div class="grid grid-cols-4 gap-2 text-sm">
           <div class="grid-cols-subgrid col-span-4 grid">
             <div class="col-span-4 col-start-1">
               <p class="inline-block font-bold">B. PERHITUNGAN KEHADIRAN</p>
