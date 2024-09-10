@@ -22,7 +22,7 @@
         font-size: 8em;
         color: rgba(112, 112, 112, 0.151);
         position: fixed;
-        font-family: 'Denk One', sans-serif;
+        font-family: 'serif', sans-serif;
         text-transform: uppercase;
         padding-left: 10%;
         padding-top: 10%;
@@ -30,10 +30,17 @@
     </style>
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'serif', sans-serif;
+      }
+    </style>
+
+    @vite(['resources/css/app.css'])
   </head>
 
-  <body>
-    
+  <body class="antialiased">
+
     <span class="watermark">PMU</span>
     <div class="mx-auto my-auto px-8 py-8">
       <div class="mb-6 flex items-center justify-between">
