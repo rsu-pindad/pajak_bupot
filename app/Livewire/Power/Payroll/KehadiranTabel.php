@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
@@ -23,6 +24,7 @@ use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
+use PowerComponents\LivewirePowerGrid\Responsive;
 
 final class KehadiranTabel extends PowerGridComponent
 {
@@ -95,8 +97,12 @@ final class KehadiranTabel extends PowerGridComponent
                 ->withoutLoading()
                 ->showSoftDeletes(showMessage: false),
             Footer::make()
-                ->showPerPage(perPage: 5, perPageValues: [5, 25, 50, 100, 500])
-                ->showRecordCount(),
+                ->pageName('kehadiranPage')
+                // ->showRecordCount(mode: 'full'), 
+                ->showPerPage( perPageValues: [5, 25, 50, 100]),
+            // ->showRecordCount(),
+            Responsive::make()
+                ->fixedColumns('nama_pegawai', 'npp_kehadiran', 'has_blast_label', 'status_blast_label', Responsive::ACTIONS_COLUMN_NAME),
         ];
     }
 
@@ -147,11 +153,13 @@ final class KehadiranTabel extends PowerGridComponent
             Column::make('Id', 'id')
                 ->hidden(isHidden: true, isForceHidden: true)
                 ->visibleInExport(true),
+            Column::make('No', 'nama_pegawai')
+                ->index(),
             Column::make('Tahun', 'kehadiran_tahun')
                 ->sortable(),
-            Column::make('Periode Bulan', 'kehadiran_periode_bulan')
+            Column::make('Periode', 'kehadiran_periode_bulan')
                 ->sortable(),
-            Column::make('Pembayaran Bulan', 'kehadiran_pembayaran_bulan')
+            Column::make('Pembayaran', 'kehadiran_pembayaran_bulan')
                 ->sortable(),
             Column::make('Npp', 'npp_kehadiran')
                 ->sortable()
@@ -162,20 +170,28 @@ final class KehadiranTabel extends PowerGridComponent
             Column::make('No Hp', 'no_hp'),
             Column::make('Email', 'email'),
             Column::make('Tunjangan', 'tunjangan_kehadiran')
+                ->bodyAttribute('text-right')
                 ->sortable(),
             Column::make('Jumlah hari kerja', 'jumlah_hari_kerja')
+                ->bodyAttribute('text-right')
                 ->sortable(),
             Column::make('Jumlah jam terbuang', 'jumlah_jam_terbuang')
+                ->bodyAttribute('text-right')
                 ->sortable(),
             Column::make('Jumlah cuti', 'jumlah_cuti')
+                ->bodyAttribute('text-right')
                 ->sortable(),
             Column::make('Potongan absensi', 'potongan_absensi')
+                ->bodyAttribute('text-right')
                 ->sortable(),
             Column::make('Jumlah pendapatan', 'jumlah_pendapatan')
+                ->bodyAttribute('text-right')
                 ->sortable(),
             Column::make('Jumlah pembulatan', 'jumlah_pembulatan')
+                ->bodyAttribute('text-right')
                 ->sortable(),
             Column::make('Jumlah diterimakan', 'jumlah_diterimakan')
+                ->bodyAttribute('text-right')
                 ->sortable(),
             Column::make('Blast', 'has_blast_label', 'has_blast')
                 ->sortable()
