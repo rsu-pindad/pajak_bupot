@@ -159,9 +159,9 @@ class extends Component {
       </div>
     </div>
   </div>
-  <div class="h-64 overflow-x-hidden rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
+  <div wire:ignore wire:key="{{ uniqid() }}" class="h-64 overflow-x-hidden rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
     <div class="p-6">
-      <livewire:power.payroll.kehadiran-tabel lazy wire:key="{{ uniqid() }}"/>
+      <livewire:power.payroll.kehadiran-tabel lazy/>
     </div>
   </div>
 </div>

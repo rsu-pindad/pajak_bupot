@@ -96,15 +96,17 @@ class KehadiranForm extends Form
         $shortUrl = UrlService::shorten($signedUrl)
                         ->withOpenLimit(2)
                         ->build();
-        $pesan = 'Halo sdr/i ' . $kehadiran->nama_pegawai . ' berikut slip Tunjangan ' . $judulDokumen . ': ' . PHP_EOL;
+        $pesan  = 'Halo sdr/i ' . $kehadiran->nama_pegawai . PHP_EOL;
+        $pesan .= PHP_EOL . 'berikut tautan slip Tunjangan ' . $judulDokumen . ': ' . PHP_EOL;
         // $pesan .= $url.PHP_EOL;
         $pesan .= PHP_EOL . $shortUrl . PHP_EOL;
-        $pesan .= PHP_EOL . 'gunakan otp dibawah untuk membuka dokumen, berlaku 3 Hari' . PHP_EOL;
+        $pesan .= PHP_EOL . 'gunakan password dibawah ini untuk membuka dokumen, berlaku 3 Hari' . PHP_EOL;
         // $pesan .= PHP_EOL . 'Password : ' . $otp . PHP_EOL;
         $pesan .= PHP_EOL . 'Password = NPP' . PHP_EOL;
         $pesan .= PHP_EOL . 'Terimakasih' . PHP_EOL;
         $pesan .= PHP_EOL . '' . PHP_EOL;
         $pesan .= PHP_EOL . '* disarankan membuka tautan diatas menggunakan chrome' . PHP_EOL;
+        $pesan .= PHP_EOL . '* kertas berukuran A5' . PHP_EOL;
         $curl   = curl_init();
 
         curl_setopt_array($curl, array(
@@ -124,7 +126,7 @@ class KehadiranForm extends Form
                 'countryCode' => '62',
             ),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: C6#6WZUo4NAza-dLJHwt'
+                'Authorization: '.config('app.FONNTE')
             ),
         ));
 

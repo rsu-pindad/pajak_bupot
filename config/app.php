@@ -198,4 +198,6 @@ return [
         'Redis'   => Illuminate\Support\Facades\Redis::class,
         'Mailjet' => Mailjet\LaravelMailjet\Facades\Mailjet::class,
     ])->toArray(),
+
+    'FONNTE' => env('FONNTE_TOKEN', ''),
 ];
