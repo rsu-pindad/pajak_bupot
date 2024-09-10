@@ -82,109 +82,68 @@
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="grid grid-cols-4 text-sm">
-          <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="col-span-4 col-start-1">
-              <p class="inline-block font-bold">A. KOMPONEN PERHITUNGAN KEHADIRAN</p>
-            </div>
-          </div>
-          <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-wrap col-span-2 col-start-1 text-left">
-              <div class="text-gray-700">TUNJANGAN KEHADIRAN</div>
-            </div>
-            <div>
-              <div class="text-gray-700">:</div>
-            </div>
-            <div class="text-wrap text-right">
-              <div class="text-gray-700">{{ number_format($kehadiran->tunjangan_kehadiran, 2, ',', '.') }}</div>
-            </div>
-          </div>
-          <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-wrap col-span-2 col-start-1 text-left">
-              <div class="text-gray-700">JUMLAH HARI KERJA</div>
-            </div>
-            <div>
-              <div class="text-gray-700">:</div>
-            </div>
-            <div class="text-wrap text-right">
-              <div class="text-gray-700">{{ $kehadiran->jumlah_hari_kerja }}</div>
-            </div>
-          </div>
-          <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-wrap col-span-2 col-start-1 text-left">
-              <div class="text-gray-700">JUMLAH JAM TERBUANG</div>
-            </div>
-            <div>
-              <div class="text-gray-700">:</div>
-            </div>
-            <div class="text-wrap text-right">
-              <div class="text-gray-700">{{ $kehadiran->jumlah_jam_terbuang }}</div>
-            </div>
-          </div>
-          <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-wrap col-span-2 col-start-1 text-left">
-              <div class="text-gray-700">JUMLAH CUTI / SAKIT </div>
-            </div>
-            <div>
-              <div class="text-gray-700">:</div>
-            </div>
-            <div class="text-wrap text-right">
-              <div class="text-gray-700">{{ $kehadiran->jumlah_cuti }}</div>
-            </div>
-          </div>
+      <div class="grid grid-cols-2 gap-4 text-sm">
+        <div class="grid grid-cols-subgrid">
+          <table class="table-fixed">
+            <thead>
+              <tr>
+                <th colspan="4" class="text-left">A. KOMPONEN PERHITUNGAN KEHADIRAN</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TUNJANGAN KEHADIRAN</td>
+                <td>:</td>
+                <td colspan="2" class="text-right">{{ number_format($kehadiran->tunjangan_kehadiran, 2, ',', '.') }}</td>
+              </tr>
+              <tr>
+                <td>JUMLAH HARI KERJA</td>
+                <td>:</td>
+                <td colspan="2" class="text-right">{{ $kehadiran->jumlah_hari_kerja }}</td>
+              </tr>
+              <tr>
+                <td>JUMLAH JAM TERBUANG</td>
+                <td>:</td>
+                <td colspan="2" class="text-right">{{ $kehadiran->jumlah_jam_terbuang }}</td>
+              </tr>
+              <tr>
+                <td>JUMLAH CUTI / SAKIT</td>
+                <td>:</td>
+                <td colspan="2" class="text-right">{{ $kehadiran->jumlah_cuti }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="grid grid-cols-4 text-sm">
-          <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="col-span-4 col-start-1">
-              <p class="inline-block font-bold">B. PERHITUNGAN KEHADIRAN</p>
-            </div>
-          </div>
-          <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-wrap col-span-2 col-start-1 text-left">
-              <div class="text-gray-700">POTONGAN ABSENSI</div>
-            </div>
-            <div>
-              <div class="text-gray-700">:</div>
-            </div>
-            <div class="text-wrap text-right">
-              <div class="text-gray-700">{{ number_format($kehadiran->potongan_absensi, 2, ',', '.') }}</div>
-            </div>
-          </div>
-          <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-wrap col-span-2 col-start-1 text-left">
-              <div class="text-gray-700">JUMLAH PENDAPATAN</div>
-            </div>
-            <div>
-              <div class="text-gray-700">:</div>
-            </div>
-            <div class="text-wrap text-right">
-              <div class="text-gray-700">{{ number_format($kehadiran->jumlah_pendapatan, 2, ',', '.') }}</div>
-            </div>
-          </div>
-          <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-wrap col-span-2 col-start-1 text-left">
-              <div class="text-gray-700">PEMBULATAN</div>
-            </div>
-            <div>
-              <div class="text-gray-700">:</div>
-            </div>
-            <div class="text-wrap text-right">
-              <div class="text-gray-700">{{ number_format($kehadiran->jumlah_pembulatan, 2, ',', '.') }}</div>
-            </div>
-          </div>
-          <div class="grid-cols-subgrid col-span-4 grid">
-            <div class="text-wrap col-span-2 col-start-1 text-left">
-              <div class="font-bold text-gray-700">DITERIMAKAN</div>
-            </div>
-            <div>
-              <div class="text-gray-700">:</div>
-            </div>
-            <div class="text-wrap text-right">
-              <div class="font-bold text-gray-700">{{ number_format($kehadiran->jumlah_diterimakan, 2, ',', '.') }}
-              </div>
-            </div>
-          </div>
+        <div class="grid grid-cols-subgrid">
+          <table class="table-fixed">
+            <thead>
+              <tr>
+                <th colspan="4" class="text-left">B. PERHITUNGAN KEHADIRAN</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>POTONGAN ABSENSI</td>
+                <td>:</td>
+                <td colspan="2" class="text-right">{{ number_format($kehadiran->potongan_absensi, 2, ',', '.') }}</td>
+              </tr>
+              <tr>
+                <td>JUMLAH PENDAPATAN</td>
+                <td>:</td>
+                <td colspan="2" class="text-right">{{ number_format($kehadiran->jumlah_pendapatan, 2, ',', '.') }}</td>
+              </tr>
+              <tr>
+                <td>PEMBULATAN</td>
+                <td>:</td>
+                <td colspan="2" class="text-right">{{ number_format($kehadiran->jumlah_pembulatan, 2, ',', '.') }}</td>
+              </tr>
+              <tr class="font-bold">
+                <td>DITERIMAKAN</td>
+                <td>:</td>
+                <td colspan="2" class="text-right">{{ number_format($kehadiran->jumlah_diterimakan, 2, ',', '.') }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <hr class="border-1 mt-4 h-px bg-gray-200 dark:bg-gray-900">
