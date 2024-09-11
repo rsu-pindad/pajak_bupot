@@ -104,65 +104,88 @@ class extends Component {
 
 }; ?>
 
-<div class="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-1">
-  <div class="h-auto overflow-x-auto rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
-    <div class="p-6">
-      
-      <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="grid grid-cols-subgrid gap-4 col-span-2">
-          <div class="col-start-1">
-            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-                  for="file_input">Unggah Berkas
-            </label>
-            <input id="file_input"
-                  wire:model="fileUpload"
-                  class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-                  aria-describedby="file_input_help"
-                  type="file">
-            <p id="file_input_help"
-              class="mt-1 text-sm text-gray-500 dark:text-gray-300">tipe file : xlsx, xls
-            </p>
+<section class="bg-white py-6 antialiased dark:bg-gray-900 md:py-6">
+  <div class="mx-auto max-w-screen-lg px-4 2xl:px-0">
+    <nav class="mb-4 flex"
+          aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
+        <li class="inline-flex items-center">
+          <a href="#"
+              class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white">
+            <x-cui-cil-home class="me-2 h-4 w-4"/>
+            Payroll
+          </a>
+        </li>
+        <li class="flex items-center">
+          <a href="#"
+              class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white">
+            <x-cui-cil-caret-right class="mx-1 h-4 w-4 text-gray-400"/>
+            Kehadiran
+          </a>
+        </li>
+      </ol>
+    </nav>
+    <div class="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-1">
+      <div class="h-auto overflow-x-auto rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
+        <div class="p-6">
+          
+          <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-subgrid gap-4 col-span-2">
+              <div class="col-start-1">
+                <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+                      for="file_input">Unggah Berkas
+                </label>
+                <input id="file_input"
+                      wire:model="fileUpload"
+                      class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+                      aria-describedby="file_input_help"
+                      type="file">
+                <p id="file_input_help"
+                  class="mt-1 text-sm text-gray-500 dark:text-gray-300">tipe file : xlsx, xls
+                </p>
+              </div>
+            </div>
+            <div>
+              <label for="bulan_periode_kehadiran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Periode Kehadiran</label>
+              <select wire:model="bulanPeriodeKehadiran" id="bulan_periode_kehadiran" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option hidden>Pilih Bulan Periode Kehadiran</option>
+                @foreach ($this->bulan as $bulan)
+                  <option value="{{Carbon::parse($bulan)->format('m')}}">{{Carbon::parse($bulan)->formatLocalized('%B')}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div>
+              <label for="bulan_pembayaran_kehadiran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Pembayaran Kehadiran</label>
+              <select wire:model="bulanPembayaranKehadiran" id="bulan_pembayaran_kehadiran" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option hidden>Pilih Bulan Pembayaran Kehadiran</option>
+                @foreach ($this->bulan as $bulan)
+                  <option value="{{Carbon::parse($bulan)->format('m')}}">{{Carbon::parse($bulan)->formatLocalized('%B')}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div>
+              <label for="tahun_insentif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Masukan Tahun Kehadiran</label>
+              <input wire:model="tahunKehadiran" placeholder="{{Carbon::now()->format('Y')}}" type="text" id="tahun_insentif" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button wire:click="import"
+                    wire:loading.remove
+                    type="button"
+                    class="inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-xs font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Unggah
+              <x-cui-cil-cloud-upload class="size-4 ml-4 fill-current" />
+            </button>
           </div>
         </div>
-        <div>
-          <label for="bulan_periode_kehadiran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Periode Kehadiran</label>
-          <select wire:model="bulanPeriodeKehadiran" id="bulan_periode_kehadiran" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option hidden>Pilih Bulan Periode Kehadiran</option>
-            @foreach ($this->bulan as $bulan)
-              <option value="{{Carbon::parse($bulan)->format('m')}}">{{Carbon::parse($bulan)->formatLocalized('%B')}}</option>
-            @endforeach
-          </select>
-        </div>
-        <div>
-          <label for="bulan_pembayaran_kehadiran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Pembayaran Kehadiran</label>
-          <select wire:model="bulanPembayaranKehadiran" id="bulan_pembayaran_kehadiran" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option hidden>Pilih Bulan Pembayaran Kehadiran</option>
-            @foreach ($this->bulan as $bulan)
-              <option value="{{Carbon::parse($bulan)->format('m')}}">{{Carbon::parse($bulan)->formatLocalized('%B')}}</option>
-            @endforeach
-          </select>
-        </div>
-        <div>
-          <label for="tahun_insentif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Masukan Tahun Kehadiran</label>
-          <input wire:model="tahunKehadiran" placeholder="{{Carbon::now()->format('Y')}}" type="text" id="tahun_insentif" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        </div>
       </div>
-
-      <div class="mt-4">
-        <button wire:click="import"
-                wire:loading.remove
-                type="button"
-                class="inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-xs font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Unggah
-          <x-cui-cil-cloud-upload class="size-4 ml-4 fill-current" />
-        </button>
+      <div class="h-64 p-6 overflow-x-hidden rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
+          <livewire:power.payroll.kehadiran-tabel />
       </div>
     </div>
   </div>
-  <div class="h-64 p-6 overflow-x-hidden rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
-      <livewire:power.payroll.kehadiran-tabel />
-  </div>
-</div>
+</section>
 
 @once
   @push('customScript')
