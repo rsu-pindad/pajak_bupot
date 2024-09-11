@@ -159,7 +159,7 @@ class extends Component {
       </div>
     </div>
   </div>
-  <div wire:ignore class="h-64 p-6 overflow-x-hidden rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
+  <div class="h-64 p-6 overflow-x-hidden rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
       <livewire:power.payroll.kehadiran-tabel wire:key="{{ uniqid() }}" />
   </div>
 </div>
