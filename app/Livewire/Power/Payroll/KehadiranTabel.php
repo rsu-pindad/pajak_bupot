@@ -282,7 +282,7 @@ final class KehadiranTabel extends PowerGridComponent
                     // dd($kehadiran->npp_kehadiran);
                     // $cariPersonalia = Personalia::where('npp', $kehadiran->npp_kehadiran)->first();
                     $this->dispatch('infoBulkBlast', rowId: $kehadiran->id);
-                    sleep(2);
+                    sleep(16);
                 }
                 // $cariKehadiran  = Kehadiran::find($rowId)->first();
                 // $sendBlast      = json_decode($this->sendBlast($cariKehadiran, $cariPersonalia), true);
