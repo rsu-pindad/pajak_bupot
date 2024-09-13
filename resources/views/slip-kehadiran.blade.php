@@ -83,7 +83,7 @@
         </div>
       </div>
       <div class="grid grid-cols-2 gap-4 text-sm">
-        <div class="grid grid-cols-subgrid">
+        <div class="grid grid-cols-subgrid gap-3">
           <table class="table-fixed">
             <thead>
               <tr>
@@ -114,7 +114,7 @@
             </tbody>
           </table>
         </div>
-        <div class="grid grid-cols-subgrid">
+        <div class="grid grid-cols-subgrid gap-3">
           <table class="table-fixed">
             <thead>
               <tr>

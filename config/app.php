@@ -201,4 +201,5 @@ return [
 
     'FONNTE' => env('FONNTE_TOKEN', ''),
     'seeder_default' => env('SEED_DEFAULT_PASSWORD', ''),
+    'PDF_OWNER_PASSWORD' => env('PDF_OWNER_PASSWORD','')
 ];

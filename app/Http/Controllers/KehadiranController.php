@@ -42,7 +42,7 @@ class KehadiranController extends Controller
         PDFPasswordProtect::setInputFile($pdfName, 'public')
             ->setOutputFile('slip_kehadiran/' . $pdfName, 'public')
             ->setFormat('A5')
-            ->setOwnerPassword('RSUPINDAD2024')
+            ->setOwnerPassword(config('app.PDF_OWNER_PASSWORD'))
             ->setPassword($dataKehadiran->npp_kehadiran)
             ->secure();
         Storage::disk('public')->delete($pdfName);
