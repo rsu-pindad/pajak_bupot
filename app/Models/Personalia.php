@@ -18,6 +18,7 @@ class Personalia extends Model
         'npwp',
         'status_ptkp',
         'email',
-        'no_hp'
+        'no_hp',
+        'epin'
     ];
 }

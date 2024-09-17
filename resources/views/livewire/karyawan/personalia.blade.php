@@ -17,7 +17,6 @@ new
 #[Layout('layouts.karyawan')] 
 #[Title('Halaman Karyawan Personalia')] 
 class extends Component {
-
     use WithFileUploads, WireUiActions;
 
     #[Validate('file')]
@@ -30,7 +29,8 @@ class extends Component {
     {
         $latestUpdate = Personalia::select('updated_at')->orderBy('updated_at', 'DESC')->first();
         if ($latestUpdate) {
-            $this->formatLatestUpdate = Carbon::parse($latestUpdate->updated_at)->format('Y m D h:i:s');
+            // $this->formatLatestUpdate = Carbon::parse($latestUpdate->updated_at)->formatLocalized('Y F D h:i:s');
+            $this->formatLatestUpdate = Carbon::parse($latestUpdate->updated_at)->formatLocalized('%G-%B, %A %T');
         } else {
             $this->formatLatestUpdate = 'belum ada data';
         }
@@ -41,7 +41,7 @@ class extends Component {
         $this->validate();
         try {
             $excelImport = Excel::import(new PersonaliaImport(), $this->fileUpload->path());
-            if($excelImport){
+            if ($excelImport) {
                 $this->fileUpload;
                 $this->dispatch('notifikasi', icon: 'success', title: 'Import Data Sukses', description: 'data berhasil di import!.');
             }
@@ -73,8 +73,8 @@ class extends Component {
                 wire:loading.remove
                 type="button"
                 class="inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-xs font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          <x-cui-cil-cloud-upload class="size-4 fill-current" />
           Unggah
+          <x-cui-cil-cloud-upload class="size-4 ml-4 fill-current" />
         </button>
       </div>
     </div>
@@ -83,8 +83,8 @@ class extends Component {
     <div class="p-6">
       <div
            class="flex-column flex flex-wrap items-center justify-between space-y-4 bg-white py-4 dark:bg-gray-900 md:flex-row md:space-y-0">
-        <div>
-          <h6>Terakhir pembaruan data : {{ $this->formatLatestUpdate }}</h6>
+        <div wire:ignore>
+          <h6>Terakhir unggah data : {{ $this->formatLatestUpdate }}</h6>
         </div>
         <div>
           <button id="dropdownActionButton"
@@ -93,17 +93,7 @@ class extends Component {
                   type="button">
             <span class="sr-only">Action button</span>
             Menu
-            <svg class="ms-2.5 h-2.5 w-2.5"
-                 aria-hidden="true"
-                 xmlns="http://www.w3.org/2000/svg"
-                 fill="none"
-                 viewBox="0 0 10 6">
-              <path stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 1 4 4 4-4" />
-            </svg>
+            <x-cui-cil-chevron-circle-down-alt class="size-3 ml-2 fill-current" />
           </button>
           <!-- Dropdown menu -->
           <div id="dropdownAction"
@@ -112,23 +102,17 @@ class extends Component {
                 aria-labelledby="dropdownActionButton">
               <li>
                 <a href="#"
-                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>
+                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Coming soon</a>
               </li>
               <li>
                 <a href="#"
-                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>
+                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Coming soon</a>
               </li>
               <li>
                 <a href="#"
-                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate
-                  account</a>
+                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Coming soon</a>
               </li>
             </ul>
-            <div class="py-1">
-              <a href="#"
-                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Delete
-                User</a>
-            </div>
           </div>
         </div>
       </div>
@@ -139,8 +123,8 @@ class extends Component {
 
 @once
   @push('customScript')
-  <script type="module">
-    Livewire.on('notifikasi', async (event) => {
+    <script type="module">
+      Livewire.on('notifikasi', async (event) => {
         await Livewire.dispatch('pg:eventRefresh-personalias');
         $wireui.notify({
           icon: event.icon,
@@ -148,6 +132,6 @@ class extends Component {
           description: event.description,
         });
       });
-  </script>
+    </script>
   @endpush
 @endonce

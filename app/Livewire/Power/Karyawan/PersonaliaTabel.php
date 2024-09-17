@@ -83,10 +83,11 @@ final class PersonaliaTabel extends PowerGridComponent
             // ->queues(3)
             Header::make()
                 ->showToggleColumns()
+                ->withoutLoading()
                 ->showSoftDeletes(showMessage: false),
             Footer::make()
-                ->showPerPage(perPage: 5, perPageValues: [5, 25, 50, 100, 500])
-                ->showRecordCount(),
+                ->pageName('personaliaPage')
+                ->showPerPage(perPageValues: [25, 50, 100]),
         ];
     }
 
@@ -110,6 +111,7 @@ final class PersonaliaTabel extends PowerGridComponent
                    ->add('status_ptkp')
                    ->add('email')
                    ->add('no_hp')
+                   ->add('epin')
                    ->add('created_at');
     }
 
@@ -119,29 +121,29 @@ final class PersonaliaTabel extends PowerGridComponent
             Column::make('Id', 'id')
                 ->hidden(isHidden: true, isForceHidden: true)
                 ->visibleInExport(true),
+            Column::make('No', 'id')
+                ->index()
+                ->sortable(),
             Column::make('Npp', 'npp')
                 ->sortable()
                 ->searchable(),
-            Column::make('Nik', 'nik')
-                ->sortable()
-                ->searchable(),
+            Column::make('Nik', 'nik'),
             Column::make('Npwp', 'npwp')
                 ->sortable()
                 ->searchable(),
             Column::make('PTKP', 'status_ptkp')
-                ->sortable()
-                ->searchable(),
+                ->sortable(),
             Column::make('Email', 'email')
                 ->sortable()
                 ->searchable(),
             Column::make('Handphone', 'no_hp')
-                ->sortable()
                 ->searchable(),
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
-            Column::make('Created at', 'created_at')
-                ->sortable()
-                ->searchable(),
+            Column::make('E-Pin', 'epin'),
+            // Column::make('Created at', 'created_at_formatted', 'created_at')
+            //     ->sortable(),
+            // Column::make('Created at', 'created_at')
+            //     ->sortable()
+            //     ->searchable(),
             Column::action('Aksi')
                 ->visibleInExport(false),
         ];

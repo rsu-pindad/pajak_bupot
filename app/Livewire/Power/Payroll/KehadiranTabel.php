@@ -153,8 +153,9 @@ final class KehadiranTabel extends PowerGridComponent
             Column::make('Id', 'id')
                 ->hidden(isHidden: true, isForceHidden: true)
                 ->visibleInExport(true),
-            Column::make('No', 'nama_pegawai')
-                ->index(),
+            Column::make('No', 'id')
+                ->index()
+                ->sortable(),
             Column::make('Tahun', 'kehadiran_tahun')
                 ->sortable(),
             Column::make('Periode', 'kehadiran_periode_bulan')

@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('personalias', function (Blueprint $table) {
             $table->id();
             $table->string('npp');
-            $table->string('nik');
-            $table->string('npwp');
-            $table->string('status_ptkp');
-            $table->string('email');
-            $table->string('no_hp');
+            $table->string('nik')->nullable();
+            $table->string('npwp')->nullable();
+            $table->string('status_ptkp')->nullable();
+            $table->string('email')->nullable();
+            $table->string('no_hp')->nullable();
+            $table->string('epin')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
