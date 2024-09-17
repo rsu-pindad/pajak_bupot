@@ -41,17 +41,16 @@ new #[Layout('layouts.guest')] #[Title('Halaman Daftar')] class extends Componen
         $sendOtp = json_decode($this->sendOtp($personalia, $randomPassword), true);
         $status = $sendOtp['status'];
 
-        if ($status != true) {
-            return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'terjadi kesalahan pengiriman');
+        if ($status == true) {
+            $validated['email'] = $personalia->email;
+            try {
+                event(new Registered(($user = User::create($validated))));
+                return $this->dispatch('sendWhatsapp', icon: 'success', title: 'NPP', description: 'Password berhasil dikirim via whatsapp');
+            } catch (\Throwable $th) {
+                return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'terjadi kesalahan hubungi admin');
+            }
         }
-
-        $validated['email'] = $personalia->email;
-        try {
-            event(new Registered(($user = User::create($validated))));
-            return $this->dispatch('sendWhatsapp', icon: 'success', title: 'NPP', description: 'Password berhasil dikirim via whatsapp');
-        } catch (\Throwable $th) {
-            return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'terjadi kesalahan hubungi admin');
-        }
+        return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'terjadi kesalahan pengiriman');
 
         // Auth::login($user);
 
@@ -60,7 +59,7 @@ new #[Layout('layouts.guest')] #[Title('Halaman Daftar')] class extends Componen
 
     public function sendOtp($personalia, $password)
     {
-        $pesan = PHP_EOL . 'Halo sdr/i berikut passowrd :' . PHP_EOL;
+        $pesan = PHP_EOL . 'Halo sdr/i berikut password :' . PHP_EOL;
         $pesan .= PHP_EOL . $password . PHP_EOL;
         $pesan .= PHP_EOL . 'gunakan NPP & Password untuk masuk' . PHP_EOL;
         $pesan .= PHP_EOL . 'Terimakasih' . PHP_EOL;
