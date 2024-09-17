@@ -49,7 +49,8 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'delete payroll_kehadiran']);
         Permission::create(['name' => 'publish payroll_kehadiran']);
         // Permission::create(['name' => 'pdf payroll_kehadiran']);
-
+        
+        User::flushEventListeners();
         // create roles and assign created permissions
         $pass = config('app.seeder_default');
 
@@ -65,6 +66,9 @@ class PermissionsSeeder extends Seeder
 
         $role4 = Role::create(['name' => 'super-admin']);
         $role4->givePermissionTo(Permission::all());
+
+        $role5 = Role::create(['name' => 'employee'])
+                     ->givePermissionTo(['view payroll_insentif', 'view payroll_kehadiran', 'view bukti_potong']);
 
         $user4 = User::create([
             'npp'               => 'it',

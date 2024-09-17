@@ -30,6 +30,12 @@
         padding-left: 10%;
         padding-top: 10%;
       }
+
+      .antialiased {
+        background-image: url("<?php public_path('pmu.png');?>");
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
     </style>
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -83,64 +89,74 @@
         </div>
       </div>
       <div class="grid grid-cols-2 gap-4 text-sm">
-        <div class="grid grid-cols-subgrid gap-3">
+        <div class="grid-cols-subgrid grid gap-3">
           <table class="table-fixed">
             <thead>
               <tr>
-                <th colspan="4" class="text-left">A. KOMPONEN PERHITUNGAN KEHADIRAN</th>
+                <th colspan="4"
+                    class="text-left">A. KOMPONEN PERHITUNGAN KEHADIRAN</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>TUNJANGAN KEHADIRAN</td>
                 <td>:</td>
-                <td colspan="2" class="text-right">{{ number_format($kehadiran->tunjangan_kehadiran, 2, ',', '.') }}</td>
+                <td colspan="2"
+                    class="text-right">{{ number_format($kehadiran->tunjangan_kehadiran, 2, ',', '.') }}</td>
               </tr>
               <tr>
                 <td>JUMLAH HARI KERJA</td>
                 <td>:</td>
-                <td colspan="2" class="text-right">{{ $kehadiran->jumlah_hari_kerja }}</td>
+                <td colspan="2"
+                    class="text-right">{{ $kehadiran->jumlah_hari_kerja }}</td>
               </tr>
               <tr>
                 <td>JUMLAH JAM TERBUANG</td>
                 <td>:</td>
-                <td colspan="2" class="text-right">{{ $kehadiran->jumlah_jam_terbuang }}</td>
+                <td colspan="2"
+                    class="text-right">{{ $kehadiran->jumlah_jam_terbuang }}</td>
               </tr>
               <tr>
                 <td>JUMLAH CUTI / SAKIT</td>
                 <td>:</td>
-                <td colspan="2" class="text-right">{{ $kehadiran->jumlah_cuti }}</td>
+                <td colspan="2"
+                    class="text-right">{{ $kehadiran->jumlah_cuti }}</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="grid grid-cols-subgrid gap-3">
+        <div class="grid-cols-subgrid grid gap-3">
           <table class="table-fixed">
             <thead>
               <tr>
-                <th colspan="4" class="text-left">B. PERHITUNGAN KEHADIRAN</th>
+                <th colspan="4"
+                    class="text-left">B. PERHITUNGAN KEHADIRAN</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>POTONGAN ABSENSI</td>
                 <td>:</td>
-                <td colspan="2" class="text-right">{{ number_format($kehadiran->potongan_absensi, 2, ',', '.') }}</td>
+                <td colspan="2"
+                    class="text-right">{{ number_format($kehadiran->potongan_absensi, 2, ',', '.') }}</td>
               </tr>
               <tr>
                 <td>JUMLAH PENDAPATAN</td>
                 <td>:</td>
-                <td colspan="2" class="text-right">{{ number_format($kehadiran->jumlah_pendapatan, 2, ',', '.') }}</td>
+                <td colspan="2"
+                    class="text-right">{{ number_format($kehadiran->jumlah_pendapatan, 2, ',', '.') }}</td>
               </tr>
               <tr>
                 <td>PEMBULATAN</td>
                 <td>:</td>
-                <td colspan="2" class="text-right">{{ number_format($kehadiran->jumlah_pembulatan, 2, ',', '.') }}</td>
+                <td colspan="2"
+                    class="text-right">{{ number_format($kehadiran->jumlah_pembulatan, 2, ',', '.') }}</td>
               </tr>
               <tr class="font-bold">
                 <td>DITERIMAKAN</td>
                 <td>:</td>
-                <td colspan="2" class="text-right">{{ number_format($kehadiran->jumlah_diterimakan, 2, ',', '.') }}</td>
+                <td colspan="2"
+                    class="text-right">{{ number_format($kehadiran->jumlah_diterimakan, 2, ',', '.') }}</td>
               </tr>
             </tbody>
           </table>
@@ -148,7 +164,21 @@
       </div>
       <hr class="border-1 mt-4 h-px bg-gray-200 dark:bg-gray-900">
       <hr class="border-1 mt-1 h-px bg-gray-200 dark:bg-gray-900">
+      <footer class="fixed inset-x-0 bottom-0 p-4 text-center text-3xl">
+        <div class="mx-auto w-full max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+          <span class="text-xs text-gray-400"><a href="https://pindadmedika.com/"
+               class="hover:underline">PT Pindad Medika Utama</a>
+          </span>
+          <ul class="items-right mt-3 flex flex-wrap text-xs font-medium text-gray-400">
+            <li>
+              <a href="#"
+                 class="hover:underline">berkas ini dibuat pada : {{ \Carbon\Carbon::now() }}</a>
+            </li>
+          </ul>
+        </div>
+      </footer>
     </div>
+
   </body>
 
 </html>

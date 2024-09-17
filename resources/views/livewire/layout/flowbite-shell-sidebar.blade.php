@@ -9,14 +9,16 @@ new class extends Component {}; ?>
   <div class="h-full overflow-y-auto bg-white px-3 py-5 dark:bg-gray-800">
 
     <ul class="space-y-2">
-      <li>
-        <a href="{{ route('beranda') }}"
-           class="@if (Route::currentRouteName() === 'beranda') active bg-blue-200 @endif group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
-          <x-cui-cil-chart-pie
-                               class="h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
-          <span class="ml-3">Beranda</span>
-        </a>
-      </li>
+      @hasanyrole(['super-admin', 'payroll','personalia','employee'])
+        <li>
+          <a href="{{ route('beranda') }}"
+            class="@if (Route::currentRouteName() === 'beranda') active bg-blue-200 @endif group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
+            <x-cui-cil-chart-pie
+                                class="h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+            <span class="ml-3">Beranda</span>
+          </a>
+        </li>
+      @endhasanyrole
       @hasexactroles('pajak')
         <li>
           <button type="button"
@@ -92,15 +94,57 @@ new class extends Component {}; ?>
                 </a>
               </li>
             @endhasexactroles
-            <a href="{{ route('payroll-kehadiran') }}"
-               class="@if (Route::currentRouteName() === 'payroll-kehadiran') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
-              <span class="ml-3 flex-1 whitespace-nowrap">Kehadiran</span>
-              <x-cui-cil-calendar-check class="h-4 w-4" />
-            </a>
+              <li>
+                <a href="{{ route('payroll-kehadiran') }}"
+                  class="@if (Route::currentRouteName() === 'payroll-kehadiran') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
+                  <span class="ml-3 flex-1 whitespace-nowrap">Kehadiran</span>
+                  <x-cui-cil-calendar-check class="h-4 w-4" />
+                </a>
+              </li>
+          </ul>
         </li>
-      </ul>
-      </li>
-    @endhasanyrole
+      @endhasanyrole
+      @hasexactroles('employee')
+        <li>
+          <button type="button"
+                  class="group flex w-full items-center rounded-lg p-2 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700"
+                  aria-controls="dropdown-karyawan"
+                  data-collapse-toggle="dropdown-karyawan">
+            <x-cui-cil-user
+                            class="h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+            <span class="ml-3 flex-1 whitespace-nowrap text-left">Dokumen</span>
+            <x-cui-cil-chevron-circle-down-alt class="size-4" />
+          </button>
+          <ul id="dropdown-karyawan"
+              class="@if (request()->routeIs(['karyawan-personalia'])) space-y-2 py-2 @else hidden space-y-2 py-2 @endif">
+            @hasexactroles('super-admin')
+            <li>
+              <a href="{{ route('karyawan-personalia') }}"
+                 class="@if (Route::currentRouteName() === 'karyawan-personalia') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
+                <span class="ml-3 flex-1 whitespace-nowrap">Bukti Potong</span>
+                <x-cui-cil-people class="h-4 w-4" />
+              </a>
+            </li>
+            @endhasexactroles
+            <li>
+              <a href="{{ route('employee-kehadiran') }}"
+                 class="@if (Route::currentRouteName() === 'employee-kehadiran') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
+                <span class="ml-3 flex-1 whitespace-nowrap">Slip Kehadiran</span>
+                <x-cui-cil-calendar-check class="h-4 w-4" />
+              </a>
+            </li>
+            @hasexactroles('super-admin')
+            <li>
+              <a href="{{ route('karyawan-personalia') }}"
+                 class="@if (Route::currentRouteName() === 'karyawan-personalia') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
+                <span class="ml-3 flex-1 whitespace-nowrap">Slip Kinerja</span>
+                <x-cui-cil-people class="h-4 w-4" />
+              </a>
+            </li>
+            @endhasexactroles
+          </ul>
+        </li>
+      @endhasexactroles
     </ul>
   </div>
 </aside>

@@ -2,9 +2,7 @@
 
 namespace App\Livewire\Forms\Payroll;
 
-use App\Http\Controllers\KehadiranController;
 use App\Models\Kehadiran;
-use App\Models\Personalia;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Livewire\Form;
@@ -72,21 +70,6 @@ class KehadiranForm extends Form
         }
     }
 
-    public function destroy($rowId)
-    {
-        Kehadiran::where('id', $rowId)->delete();
-    }
-
-    public function restore($rowId)
-    {
-        Kehadiran::withTrashed()->where('id', $rowId)->restore();
-    }
-
-    public function permanentDestroy($rowId)
-    {
-        Kehadiran::withTrashed()->where('id', $rowId)->forceDelete();
-    }
-
     private function sendBlast($kehadiran, $personalia, $judulDokumen)
     {
         // $url = action([KehadiranController::class, 'slip-kehadiran'],['user' => $kehadiran->id]);
@@ -141,5 +124,20 @@ class KehadiranForm extends Form
         }
 
         return $response;
+    }
+
+    public function destroy($rowId)
+    {
+        Kehadiran::where('id', $rowId)->delete();
+    }
+
+    public function restore($rowId)
+    {
+        Kehadiran::withTrashed()->where('id', $rowId)->restore();
+    }
+
+    public function permanentDestroy($rowId)
+    {
+        Kehadiran::withTrashed()->where('id', $rowId)->forceDelete();
     }
 }
