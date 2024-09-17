@@ -37,6 +37,9 @@ new class extends Component {
           @hasexactroles('payroll')
           Payroll
           @endhasexactroles
+          @hasexactroles('employee')
+          Dokumen
+          @endhasexactroles
         </span>
       </a>
     </div>

@@ -17,11 +17,14 @@
           rel="stylesheet" />
 
     <!-- Scripts -->
+    <wireui:scripts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>
 
   <body class="font-sans text-gray-900 antialiased">
+    <x-wireui-notifications position="top-end" />
     {{ $slot }}
+    @stack('customScript');
   </body>
 
 </html>

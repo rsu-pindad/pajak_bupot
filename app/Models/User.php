@@ -48,4 +48,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Transfer::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::created(function ($model) {
+            $model->syncRoles('employee');
+        });
+    }
 }
