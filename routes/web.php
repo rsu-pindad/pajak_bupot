@@ -3,8 +3,6 @@
 use App\Http\Controllers\KehadiranController;
 use App\Livewire\ManagePublish;
 use App\Livewire\ManageTransfers;
-use App\Models\Kehadiran;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -46,7 +44,9 @@ Route::middleware(['auth'])->group(function () {
 
     Volt::route('berkas-kehadiran', 'employee.kehadiran')->name('employee-kehadiran');
 });
-Route::get('/berkas-kehadiran-karyawan/{user}/{bulan}/{tahun}', [KehadiranController::class, '__invoke'])->name('berkas-kehadiran-karyawan');
-Route::get('/slip-kehadiran/{user}', [KehadiranController::class, 'view'])->name('slip-kehadiran');
+Route::middleware('throttle:3,1')->group(function () {
+    Route::get('/berkas-kehadiran-karyawan/{user}/{bulan}/{tahun}', [KehadiranController::class, '__invoke'])->name('berkas-kehadiran-karyawan');
+    Route::get('/slip-kehadiran/{user}', [KehadiranController::class, 'view'])->name('slip-kehadiran');
+});
 
 require __DIR__ . '/auth.php';

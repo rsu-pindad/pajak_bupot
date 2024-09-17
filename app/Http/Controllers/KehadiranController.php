@@ -8,7 +8,6 @@ use DevRaeph\PDFPasswordProtect\Facade\PDFPasswordProtect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Spatie\LaravelPdf\Enums\Format;
 use Spatie\LaravelPdf\Enums\Orientation;
@@ -122,7 +121,7 @@ class KehadiranController extends Controller
             CURLOPT_POSTFIELDS => array(
                 'target'      => $dataKehadiran->no_hp,
                 'message'     => $pesan,
-                'delay'       => '5',
+                'delay'       => '15',
                 'countryCode' => '62',
             ),
             CURLOPT_HTTPHEADER => array(

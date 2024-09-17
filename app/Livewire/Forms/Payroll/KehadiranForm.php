@@ -105,7 +105,7 @@ class KehadiranForm extends Form
                 // 'target'      => $personalia['no_hp'],
                 'target'      => $kehadiran->no_hp,
                 'message'     => $pesan,
-                'delay'       => '5',
+                'delay'       => '15',
                 'countryCode' => '62',
             ),
             CURLOPT_HTTPHEADER => array(
