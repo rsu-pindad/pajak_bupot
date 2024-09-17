@@ -14,7 +14,10 @@ use Livewire\Volt\Component;
 use Illuminate\Support\Str;
 use WireUi\Traits\WireUiActions;
 
-new #[Layout('layouts.guest')] #[Title('Halaman Daftar')] class extends Component {
+new 
+#[Layout('layouts.guest')] 
+#[Title('Halaman Daftar')] 
+class extends Component {
     use WireUiActions;
     public string $npp = '';
     // public string $email = '';
@@ -128,65 +131,22 @@ new #[Layout('layouts.guest')] #[Title('Halaman Daftar')] class extends Componen
                            class="mt-2" />
           </div>
           <button type="submit"
+                  wire:loading.remove
                   class="w-full rounded-lg bg-primary-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
             Cari NPP
           </button>
+          <p class="mt-6 text-sm font-light text-gray-500 dark:text-gray-400">
+            <a href="{{ route('login') }}"
+               wire:navigate="false"
+               class="font-medium text-primary-600 hover:underline dark:text-primary-500">
+              Kembali
+            </a>
+          </p>
         </form>
       </div>
     </div>
   </div>
 </section>
-
-{{-- <div>
-    <form wire:submit="register">
-        <!-- Name -->
-        <div>
-            <x-input-label for="npp" :value="__('npp')" />
-            <x-text-input wire:model="npp" id="npp" class="block mt-1 w-full" type="text" name="npp" required autofocus autocomplete="npp" />
-            <x-input-error :messages="$errors->get('npp')" class="mt-2" />
-        </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}" wire:navigate>
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</div> --}}
 
 @once
   @push('customScript')

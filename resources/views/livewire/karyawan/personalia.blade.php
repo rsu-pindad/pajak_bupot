@@ -70,6 +70,7 @@ class extends Component {
 
       <div>
         <button wire:click="import"
+                wire:loading.remove
                 type="button"
                 class="inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-xs font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           <x-cui-cil-cloud-upload class="size-4 fill-current" />
