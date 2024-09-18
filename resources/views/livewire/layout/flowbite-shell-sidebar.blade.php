@@ -114,7 +114,7 @@ new class extends Component {}; ?>
             <x-cui-cil-chevron-circle-down-alt class="size-4" />
           </button>
           <ul id="dropdown-karyawan"
-              class="@if (request()->routeIs(['karyawan-personalia'])) space-y-2 py-2 @else hidden space-y-2 py-2 @endif">
+              class="@if (request()->routeIs(['employee-insentif','employee-kehadiran'])) space-y-2 py-2 @else hidden space-y-2 py-2 @endif">
             @hasexactroles('super-admin')
             <li>
               <a href="{{ route('karyawan-personalia') }}"
