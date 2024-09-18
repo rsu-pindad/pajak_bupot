@@ -23,6 +23,7 @@
 
   <body class="font-sans text-gray-900 antialiased">
     <x-wireui-notifications position="top-end" />
+    <x-wireui-dialog />
     {{ $slot }}
     @stack('customScript');
   </body>
