@@ -35,15 +35,15 @@ class extends Component {
             // 'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $personalia = Personalia::where('npp', $validated['npp'])->first();
+        if (!$personalia) {
+          return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'npp tidak ditemukan!.');
+        }
+        $cariUser = User::where('npp', $validated['npp'])->first();
+        if ($cariUser) {
+          return $this->dispatch('notifikasi', icon: 'info', title: 'NPP', description: 'npp sudah terdaftar!.');
+        }
         try {
-            $personalia = Personalia::where('npp', $validated['npp'])->first();
-            if (!$personalia) {
-                return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'npp tidak ditemukan!.');
-            }
-            $cariUser = User::where('npp', $validated['npp'])->first();
-            if ($cariUser) {
-                return $this->dispatch('notifikasi', icon: 'info', title: 'NPP', description: 'npp sudah terdaftar!.');
-            }
             $randomPassword = Str::random(8);
             $validated['password'] = Hash::make($randomPassword);
             $sendOtp = json_decode($this->sendOtp($personalia, $randomPassword), true);
