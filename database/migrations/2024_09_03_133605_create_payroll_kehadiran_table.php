@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('npp_kehadiran')->unique();
             $table->string('nama_pegawai')->nullable();
             $table->string('status_pegawai')->nullable();
-            $table->string('no_hp');
+            $table->string('no_hp')->nullable();
             $table->string('email')->nullable();
             $table->double('tunjangan_kehadiran')->default(0)->nullable();
             $table->integer('jumlah_hari_kerja')->default(0)->nullable();

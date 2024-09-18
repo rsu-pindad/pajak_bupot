@@ -3,6 +3,7 @@
 namespace App\Imports\Payroll;
 
 use App\Imports\Payroll\KehadiranImport;
+use App\Imports\Payroll\InsentifImport;
 use Maatwebsite\Excel\Concerns\WithConditionalSheets;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
@@ -25,6 +26,7 @@ class SelectSheetImport implements WithMultipleSheets
     {
         return [
             'tj kehadiran' => new KehadiranImport(5, $this->bulan_periode, $this->bulan_pembayaran, $this->tahun),
+            'INSENTIF FIX' => new InsentifImport(4, $this->bulan_periode, $this->bulan_pembayaran, $this->tahun),
         ];
     }
 }

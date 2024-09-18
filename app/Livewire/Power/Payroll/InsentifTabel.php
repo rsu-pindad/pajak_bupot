@@ -3,14 +3,12 @@
 namespace App\Livewire\Power\Payroll;
 
 use App\Enums\Bulan;
-use App\Models\Kehadiran;
-use App\Models\Personalia;
+use App\Models\Insentif;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
@@ -26,12 +24,12 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\Responsive;
 
-final class KehadiranTabel extends PowerGridComponent
+final class InsentifTabel extends PowerGridComponent
 {
     use WithExport;
 
     #[Locked]
-    public string $tableName = 'payroll_kehadiran';
+    public string $tableName = 'payroll_insentif';
 
     public bool $deferLoading = true;
     public string $strRandom  = '';
@@ -49,13 +47,6 @@ final class KehadiranTabel extends PowerGridComponent
             ...$this->powerGridQueryString(),
         ];
     }
-
-    // protected function getListeners() : array
-    // {
-    //     return [
-    //         'pg:softDeletes-'.$this->tableName => '',
-    //     ];
-    // }
 
     public function header(): array
     {
@@ -81,34 +72,31 @@ final class KehadiranTabel extends PowerGridComponent
 
         $this->persist(
             tableItems: ['columns', 'filters', 'sorting'],
-            prefix: 'payroll_kehadiran_table_' . Auth::id(),
+            prefix: 'payroll_insentif_table_' . Auth::id(),
         );
         $this->strRandom = Str::random(4);
 
         return [
-            Exportable::make('export_payroll_kehadiran_' . Carbon::now()->format('Y-M-d_') . $this->strRandom)
+            Exportable::make('export_payroll_insentif_' . Carbon::now()->format('Y-M-d_') . $this->strRandom)
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV)
                 ->csvSeparator(',')
                 ->csvDelimiter('"'),
-            // ->queues(3)
             Header::make()
                 ->showToggleColumns()
                 ->withoutLoading()
                 ->showSoftDeletes(showMessage: false),
             Footer::make()
-                ->pageName('kehadiranPage')
-                // ->showRecordCount(mode: 'full'), 
-                ->showPerPage( perPageValues: [5, 25, 50, 100]),
-            // ->showRecordCount(),
+                ->pageName('insentifPage')
+                ->showPerPage(perPageValues: [5, 25, 50, 100]),
             Responsive::make()
-                ->fixedColumns('nama_pegawai', 'npp_kehadiran', 'has_blast_label', 'status_blast_label', Responsive::ACTIONS_COLUMN_NAME),
+                ->fixedColumns('nama_pegawai', 'npp_insentif', 'has_blast_label', 'status_blast_label', Responsive::ACTIONS_COLUMN_NAME),
         ];
     }
 
     public function datasource(): Builder
     {
-        return Kehadiran::query();
+        return Insentif::query();
     }
 
     public function relationSearch(): array
@@ -120,31 +108,33 @@ final class KehadiranTabel extends PowerGridComponent
     {
         return PowerGrid::fields()
                    ->add('id')
-                   ->add('npp_kehadiran')
+                   ->add('npp_insentif')
                    ->add('nama_pegawai')
+                   ->add('status_pegawai')
                    ->add('no_hp')
                    ->add('email')
-                   ->add('tunjangan_kehadiran')
-                   ->add('jumlah_hari_kerja')
-                   ->add('jumlah_jam_terbuang')
-                   ->add('jumlah_cuti')
-                   ->add('potongan_absensi')
-                   ->add('jumlah_pendapatan')
-                   ->add('jumlah_pembulatan')
-                   ->add('jumlah_diterimakan')
-                   ->add('kehadiran_periode_bulan', fn($kehadiran)    => Bulan::from($kehadiran->kehadiran_periode_bulan)->labels())
-                   ->add('kehadiran_pembayaran_bulan', fn($kehadiran) => Bulan::from($kehadiran->kehadiran_pembayaran_bulan)->labels())
-                   ->add('kehadiran_tahun')
+                   ->add('level_insentif')
+                   ->add('penempatan')
+                   ->add('jabatan')
+                   ->add('unit')
+                   ->add('nominal_max_insentif_kinerja')
+                   ->add('kinerja_keuangan_perusahaan')
+                   ->add('nilai_kpi')
+                   ->add('insentif_kinerja')
+                   ->add('pembulatan')
+                   ->add('diterimakan')
+                   ->add('insentif_periode_bulan', fn($insentif)    => Bulan::from($insentif->insentif_periode_bulan)->labels())
+                   ->add('insentif_pembayaran_bulan', fn($insentif) => Bulan::from($insentif->insentif_pembayaran_bulan)->labels())
+                   ->add('insentif_tahun')
                    ->add('has_blast')
-                   ->add('has_blast_label', function ($kehadiran) {
-                       return $kehadiran->has_blast ? 'Iya' : 'Belum';
+                   ->add('has_blast_label', function ($insentif) {
+                       return $insentif->has_blast ? 'Iya' : 'Belum';
                    })
                    ->add('status_blast')
-                   ->add('status_blast_label', function ($kehadiran) {
-                       return $kehadiran->status_blast ? 'Terkirim' : 'Belum';
+                   ->add('status_blast_label', function ($insentif) {
+                       return $insentif->status_blast ? 'Terkirim' : 'Belum';
                    })
-                   ->add('created_at')
-                   ->add('updated_at');
+                   ->add('created_at');
     }
 
     public function columns(): array
@@ -153,63 +143,65 @@ final class KehadiranTabel extends PowerGridComponent
             Column::make('Id', 'id')
                 ->hidden(isHidden: true, isForceHidden: true)
                 ->visibleInExport(true),
-            Column::make('No', 'id')
-                ->index()
-                ->sortable(),
-            Column::make('Tahun', 'kehadiran_tahun')
-                ->sortable(),
-            Column::make('Periode', 'kehadiran_periode_bulan')
-                ->sortable(),
-            Column::make('Pembayaran', 'kehadiran_pembayaran_bulan')
-                ->sortable(),
-            Column::make('Npp', 'npp_kehadiran')
+            Column::make('Tahun', 'insentif_tahun')
                 ->sortable()
                 ->searchable(),
-            Column::make('Nama', 'nama_pegawai')
+            Column::make('Periode', 'insentif_periode_bulan')
                 ->sortable()
                 ->searchable(),
-            Column::make('No Hp', 'no_hp'),
+            Column::make('Pembayaran', 'insentif_pembayaran_bulan')
+                ->sortable()
+                ->searchable(),
+            Column::make('Npp insentif', 'npp_insentif')
+                ->sortable()
+                ->searchable(),
+            Column::make('Nama pegawai', 'nama_pegawai')
+                ->sortable()
+                ->searchable(),
+            Column::make('Status pegawai', 'status_pegawai')
+                ->sortable(),
+            Column::make('No hp', 'no_hp'),
             Column::make('Email', 'email'),
-            Column::make('Tunjangan', 'tunjangan_kehadiran')
+            Column::make('Level insentif', 'level_insentif')
+                ->sortable(),
+            Column::make('Penempatan', 'penempatan')
+                ->sortable(),
+            Column::make('Jabatan', 'jabatan')
+                ->sortable(),
+            Column::make('Unit', 'unit')
+                ->sortable()
+                ->searchable(),
+            Column::make('Nominal max insentif kinerja', 'nominal_max_insentif_kinerja')
                 ->bodyAttribute('text-right')
                 ->sortable(),
-            Column::make('Jumlah hari kerja', 'jumlah_hari_kerja')
+            Column::make('Kinerja keuangan perusahaan', 'kinerja_keuangan_perusahaan')
                 ->bodyAttribute('text-right')
                 ->sortable(),
-            Column::make('Jumlah jam terbuang', 'jumlah_jam_terbuang')
+            Column::make('Nilai kpi', 'nilai_kpi')
                 ->bodyAttribute('text-right')
                 ->sortable(),
-            Column::make('Jumlah cuti', 'jumlah_cuti')
+            Column::make('Insentif kinerja', 'insentif_kinerja')
                 ->bodyAttribute('text-right')
                 ->sortable(),
-            Column::make('Potongan absensi', 'potongan_absensi')
+            Column::make('Pembulatan', 'pembulatan')
                 ->bodyAttribute('text-right')
                 ->sortable(),
-            Column::make('Jumlah pendapatan', 'jumlah_pendapatan')
+            Column::make('Diterimakan', 'diterimakan')
                 ->bodyAttribute('text-right')
                 ->sortable(),
-            Column::make('Jumlah pembulatan', 'jumlah_pembulatan')
-                ->bodyAttribute('text-right')
-                ->sortable(),
-            Column::make('Jumlah diterimakan', 'jumlah_diterimakan')
-                ->bodyAttribute('text-right')
-                ->sortable(),
-            Column::make('Blast', 'has_blast_label', 'has_blast')
+            Column::make('Blast', 'has_blast')
+                ->sortable()
+                ->searchable(),
+            Column::make('Terkirim', 'status_blast')
                 ->sortable()
                 ->visibleInExport(false),
-            Column::make('Terkirim', 'status_blast_label', 'status_blast')
-                ->sortable()
-                ->visibleInExport(false),
-            // Column::make('Created at', 'created_at_formatted', 'created_at')
-            //     ->sortable(),
             Column::make('dibuat', 'created_at')
                 ->hidden(isHidden: true)
                 ->sortable()
                 ->visibleInExport(false),
             Column::make('diperbarui', 'updated_at')
                 ->hidden(isHidden: true)
-                ->sortable()
-                ->visibleInExport(false),
+                ->sortable(),
             Column::action('Aksi')
                 ->visibleInExport(false),
         ];
@@ -218,14 +210,14 @@ final class KehadiranTabel extends PowerGridComponent
     public function filters(): array
     {
         return [
-            Filter::inputText('npp_kehadiran')->placeholder('cari npp'),
+            Filter::inputText('npp_insentif')->placeholder('cari npp'),
             Filter::inputText('nama_pegawai')->placeholder('cari nama'),
-            Filter::enumSelect('kehadiran_periode_bulan', 'kehadiran_periode_bulan')
+            Filter::enumSelect('insentif_periode_bulan', 'kehadiran_periode_bulan')
                 ->dataSource(Bulan::cases())
-                ->optionLabel('kehadiran_periode_bulan'),
+                ->optionLabel('insentif_periode_bulan'),
             Filter::enumSelect('kehadiran_pembayaran_bulan', 'kehadiran_pembayaran_bulan')
                 ->dataSource(Bulan::cases())
-                ->optionLabel('kehadiran_pembayaran_bulan'),
+                ->optionLabel('insentif_pembayaran_bulan'),
             FIlter::boolean('has_blast', 'has_blast')
                 ->label('Iya', 'Belum'),
             FIlter::boolean('status_blast', 'status_blast')
@@ -233,7 +225,7 @@ final class KehadiranTabel extends PowerGridComponent
         ];
     }
 
-    public function actions(Kehadiran $row): array
+    public function actions(Insentif $row): array
     {
         return [
             Button::add('hapus')
@@ -272,34 +264,18 @@ final class KehadiranTabel extends PowerGridComponent
     #[On('bulkBlastWa.{tableName}')]
     public function bulkBlastWa(): void
     {
-        // $cariPersonalia = [];
         try {
             if ($this->checkboxValues) {
-                $cariKehadiran = Kehadiran::whereIn('id', Arr::flatten($this->checkboxValues))->get();
-                // $cariPersonalia = Personalia::whereIn('npp', $cariKehadiran->npp_kehadiran);
-                // dd($cariKehadiran);
-                // dd($cariKehadiran);
-                foreach ($cariKehadiran as $kehadiran) {
-                    // dd($kehadiran->npp_kehadiran);
-                    // $cariPersonalia = Personalia::where('npp', $kehadiran->npp_kehadiran)->first();
-                    $this->dispatch('infoBulkBlast', rowId: $kehadiran->id);
+                $cariInsentif = Insentif::whereIn('id', Arr::flatten($this->checkboxValues))->get();
+                foreach ($cariInsentif as $insentif) {
+                    $this->dispatch('infoBulkBlast', rowId: $insentif->id);
                     sleep(16);
                 }
-                // $cariKehadiran  = Kehadiran::find($rowId)->first();
-                // $sendBlast      = json_decode($this->sendBlast($cariKehadiran, $cariPersonalia), true);
-                // $status = $sendBlast['status'];
-                // $detail = $sendBlast['detail'];
-                // if ($status == true) {
-                //     // $cariKehadiran->has_blast    = true;
-                //     // $cariKehadiran->status_blast = true;
-                //     // $cariKehadiran->save();
-                // }
 
                 $this->js('window.pgBulkActions.clearAll()');
             }
-            // $this->dispatch('notifikasi',icon: 'error', title: 'Kehadiran',  description: $satuan);
         } catch (\Throwable $th) {
-            $this->dispatch('notifikasi',icon: 'error', title: 'Kehadiran',  description: $th->getMessage());
+            $this->dispatch('notifikasi', icon: 'error', title: 'Insentif', description: $th->getMessage());
         }
     }
 
@@ -308,13 +284,13 @@ final class KehadiranTabel extends PowerGridComponent
     {
         try {
             if ($this->checkboxValues) {
-                $kehadiran = Kehadiran::whereIn('id', Arr::flatten($this->checkboxValues));
-                $kehadiran->delete();
+                $insentif = Insentif::whereIn('id', Arr::flatten($this->checkboxValues));
+                $insentif->delete();
                 $this->js('window.pgBulkActions.clearAll()');
             }
-            $this->dispatch('notifikasi', icon: 'info', title: 'Kehadiran', description: 'data berhasil dihapus!.');
+            $this->dispatch('notifikasi', icon: 'info', title: 'Insentif', description: 'data berhasil dihapus!.');
         } catch (\Throwable $th) {
-            $this->dispatch('notifikasi', icon: 'error', title: 'Kehadiran', description: $th->getMessage());
+            $this->dispatch('notifikasi', icon: 'error', title: 'Insentif', description: $th->getMessage());
         }
     }
 
@@ -322,25 +298,25 @@ final class KehadiranTabel extends PowerGridComponent
     {
         return [
             Rule::button('hapus')
-                ->when(fn(Kehadiran $kehadiran) => $kehadiran->trashed() == true || $kehadiran->has_blast == true)
+                ->when(fn(Insentif $insentif) => $insentif->trashed() == true || $insentif->has_blast == true)
                 ->hide(),
             Rule::button('bulk-delete')
-                ->when(fn(Kehadiran $kehadiran) => $kehadiran->trashed() == false)
+                ->when(fn(Insentif $insentif) => $insentif->trashed() == false)
                 ->hide(),
             Rule::button('pulihkan')
-                ->when(fn(Kehadiran $kehadiran) => $kehadiran->trashed() == false)
+                ->when(fn(Insentif $insentif) => $insentif->trashed() == false)
                 ->hide(),
             Rule::button('permanen-delete')
-                ->when(fn(Kehadiran $kehadiran) => $kehadiran->trashed() == false)
+                ->when(fn(Insentif $insentif) => $insentif->trashed() == false)
                 ->hide(),
             Rule::button('blast')
-                ->when(fn(Kehadiran $kehadiran) => $kehadiran->trashed() == true || $kehadiran->has_blast == true)
+                ->when(fn(Insentif $insentif) => $insentif->trashed() == true || $insentif->has_blast == true)
                 ->hide(),
             Rule::button('repeat')
-                ->when(fn(Kehadiran $kehadiran) => $kehadiran->has_blast == false || $kehadiran->status_blast == false)
+                ->when(fn(Insentif $insentif) => $insentif->has_blast == false || $insentif->status_blast == false)
                 ->hide(),
             Rule::checkbox()
-                ->when(fn(Kehadiran $kehadiran) => $kehadiran->trashed() == true)
+                ->when(fn(Insentif $insentif) => $insentif->trashed() == true)
                 ->hide(),
         ];
     }

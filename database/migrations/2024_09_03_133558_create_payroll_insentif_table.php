@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,6 +13,10 @@ return new class extends Migration
         Schema::create('payroll_insentif', function (Blueprint $table) {
             $table->id();
             $table->string('npp_insentif')->unique();
+            $table->string('nama_pegawai')->nullable();
+            $table->string('status_pegawai')->nullable();
+            $table->string('no_hp')->nullable();
+            $table->string('email')->nullable();
             $table->string('level_insentif')->nullable();
             $table->string('penempatan')->nullable();
             $table->string('jabatan')->nullable();
@@ -24,7 +27,8 @@ return new class extends Migration
             $table->double('insentif_kinerja')->default(0)->nullable();
             $table->double('pembulatan')->default(0)->nullable();
             $table->double('diterimakan')->default(0)->nullable();
-            $table->string('insentif_bulan');
+            $table->string('insentif_periode_bulan');
+            $table->string('insentif_pembayaran_bulan');
             $table->string('insentif_tahun');
             $table->boolean('has_blast')->default(false)->nullable();
             $table->boolean('status_blast')->default(false)->nullable();

@@ -14,6 +14,10 @@ class Insentif extends Model
 
     protected $fillable = [
         'npp_insentif',
+        'nama_pegawai',
+        'status_pegawai',
+        'no_hp',
+        'email',
         'level_insentif',
         'penempatan',
         'jabatan',
@@ -24,6 +28,9 @@ class Insentif extends Model
         'insentif_kinerja',
         'pembulatan',
         'diterimakan',
+        'insentif_periode_bulan',
+        'insentif_pembayaran_bulan',
+        'insentif_tahun',
         'has_blast',
         'status_blast'
     ];
