@@ -24,7 +24,7 @@ new class extends Component {
         <x-cui-cil-menu class="hidden h-6 w-6" />
         <span class="sr-only">Toggle sidebar</span>
       </button>
-      <a href="https://flowbite.com"
+      <a href="{{route('beranda')}}"
          class="mr-4 flex items-center justify-between">
         <x-cui-cib-read-the-docs class="mr-3 h-8" />
         <span class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
