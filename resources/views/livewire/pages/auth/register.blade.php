@@ -35,25 +35,29 @@ class extends Component {
             // 'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $personalia = Personalia::where('npp', $validated['npp'])->first();
-        if (!$personalia) {
-            return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'npp tidak ditemukan!.');
-        }
-        $randomPassword = Str::random(8);
-        $validated['password'] = Hash::make($randomPassword);
-        $sendOtp = json_decode($this->sendOtp($personalia, $randomPassword), true);
-        $status = $sendOtp['status'];
-
-        if ($status == true) {
-            $validated['email'] = $personalia->email;
-            try {
-                event(new Registered(($user = User::create($validated))));
-                return $this->dispatch('sendWhatsapp', icon: 'success', title: 'NPP', description: 'Password berhasil dikirim via whatsapp');
-            } catch (\Throwable $th) {
-                return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'terjadi kesalahan hubungi admin');
+        try {
+            $personalia = Personalia::where('npp', $validated['npp'])->first();
+            if (!$personalia) {
+                return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'npp tidak ditemukan!.');
             }
+            $cariUser = User::where('npp', $validated['npp'])->first();
+            if ($cariUser) {
+                return $this->dispatch('notifikasi', icon: 'info', title: 'NPP', description: 'npp sudah terdaftar!.');
+            }
+            $randomPassword = Str::random(8);
+            $validated['password'] = Hash::make($randomPassword);
+            $sendOtp = json_decode($this->sendOtp($personalia, $randomPassword), true);
+            $status = $sendOtp['status'];
+
+            if ($status == true) {
+                $validated['email'] = $personalia->email;
+                event(new Registered(($user = User::create($validated))));
+                return $this->dispatch('notifikasi', icon: 'success', title: 'NPP', description: 'Password berhasil dikirim via whatsapp');
+            }
+        } catch (\Throwable $th) {
+            return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'terjadi kesalahan hubungi admin');
         }
-        return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'terjadi kesalahan pengiriman');
+        // return $this->dispatch('notifikasi', icon: 'error', title: 'NPP', description: 'terjadi kesalahan pengiriman');
 
         // Auth::login($user);
 

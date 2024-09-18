@@ -125,21 +125,19 @@ new class extends Component {}; ?>
             </li>
             @endhasexactroles
             <li>
+              <a href="{{ route('employee-insentif') }}"
+                 class="@if (Route::currentRouteName() === 'employee-insentif') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
+                <span class="ml-3 flex-1 whitespace-nowrap">Slip Insentif</span>
+                <x-cui-cil-people class="h-4 w-4" />
+              </a>
+            </li>
+            <li>
               <a href="{{ route('employee-kehadiran') }}"
                  class="@if (Route::currentRouteName() === 'employee-kehadiran') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
                 <span class="ml-3 flex-1 whitespace-nowrap">Slip Kehadiran</span>
                 <x-cui-cil-calendar-check class="h-4 w-4" />
               </a>
             </li>
-            @hasexactroles('super-admin')
-            <li>
-              <a href="{{ route('karyawan-personalia') }}"
-                 class="@if (Route::currentRouteName() === 'karyawan-personalia') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
-                <span class="ml-3 flex-1 whitespace-nowrap">Slip Kinerja</span>
-                <x-cui-cil-people class="h-4 w-4" />
-              </a>
-            </li>
-            @endhasexactroles
           </ul>
         </li>
       @endhasexactroles

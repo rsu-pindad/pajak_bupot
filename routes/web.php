@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bukti-potong-upload', ManageTransfers::class)->name('bupot-upload');
     Route::get('/bukti-potong-publish', ManagePublish::class)->name('bupot-publish');
 
+    Volt::route('berkas-insentif', 'employee.insentif')->name('employee-insentif');
     Volt::route('berkas-kehadiran', 'employee.kehadiran')->name('employee-kehadiran');
 });
 
@@ -51,6 +52,7 @@ Route::middleware('throttle:3,1')->group(function () {
     Route::get('/berkas-kehadiran-karyawan/{user}/{bulan}/{tahun}', [KehadiranController::class, '__invoke'])->name('berkas-kehadiran-karyawan');
     Route::get('/slip-kehadiran/{user}', [KehadiranController::class, 'view'])->name('slip-kehadiran');
     
+    Route::get('/berkas-insentif-karyawan/{user}/{bulan}/{tahun}', [InsentifController::class, '__invoke'])->name('berkas-insentif-karyawan');
     Route::get('/slip-insentif/{user}', [InsentifController::class, 'view'])->name('slip-insentif');
 });
 
