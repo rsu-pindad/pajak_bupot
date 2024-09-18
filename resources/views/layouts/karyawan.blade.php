@@ -16,10 +16,10 @@
 
   <body>
     <div class="bg-gray-50 antialiased dark:bg-gray-900">
-      <livewire:layout.flowbite-shell-navbar/>
+      <livewire:layout.flowbite-shell-navbar wire:key="{{ uniqid() }}" />
       
       <!-- Sidebar -->
-      <livewire:layout.flowbite-shell-sidebar/>
+      <livewire:layout.flowbite-shell-sidebar wire:key="{{ uniqid() }}" />
       
       <main class="h-auto p-4 pt-20 md:ml-64">
         <x-wireui-notifications position="top-end" />

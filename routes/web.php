@@ -22,9 +22,7 @@ use App\Http\Controllers\InsentifController;
 Volt::route('/', 'pages.auth.login')
     ->middleware(['guest']);
 
-Volt::route('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
+
 
 Route::get('dev-login', function () {
     abort_unless(app()->environment('local'), 403);
@@ -35,6 +33,8 @@ Route::get('dev-login', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Volt::route('profile', 'profile')->name('profile');
+
     Volt::route('beranda', 'beranda')->name('beranda');
     Volt::route('karyawan-personalia', 'karyawan.personalia')->name('karyawan-personalia');
     // Volt::route('karyawan-payroll-insentif', 'karyawan-payroll-insentif')->name('payroll-insentif');
