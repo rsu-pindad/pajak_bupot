@@ -99,7 +99,7 @@ final class KehadiranTabel extends PowerGridComponent
             Footer::make()
                 ->pageName('kehadiranPage')
                 // ->showRecordCount(mode: 'full'), 
-                ->showPerPage( perPageValues: [5, 25, 50, 100]),
+                ->showPerPage( perPageValues: [25, 50, 100]),
             // ->showRecordCount(),
             Responsive::make()
                 ->fixedColumns('nama_pegawai', 'npp_kehadiran', 'has_blast_label', 'status_blast_label', Responsive::ACTIONS_COLUMN_NAME),

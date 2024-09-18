@@ -88,7 +88,7 @@ final class InsentifTabel extends PowerGridComponent
                 ->showSoftDeletes(showMessage: false),
             Footer::make()
                 ->pageName('insentifPage')
-                ->showPerPage(perPageValues: [5, 25, 50, 100]),
+                ->showPerPage(perPageValues: [25, 50, 100]),
             Responsive::make()
                 ->fixedColumns('nama_pegawai', 'npp_insentif', 'has_blast_label', 'status_blast_label', Responsive::ACTIONS_COLUMN_NAME),
         ];
@@ -134,7 +134,8 @@ final class InsentifTabel extends PowerGridComponent
                    ->add('status_blast_label', function ($insentif) {
                        return $insentif->status_blast ? 'Terkirim' : 'Belum';
                    })
-                   ->add('created_at');
+                   ->add('created_at')
+                   ->add('updated_at');
     }
 
     public function columns(): array
@@ -147,22 +148,20 @@ final class InsentifTabel extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
             Column::make('Periode', 'insentif_periode_bulan')
-                ->sortable()
-                ->searchable(),
+                ->sortable(),
             Column::make('Pembayaran', 'insentif_pembayaran_bulan')
+                ->sortable(),
+            Column::make('Npp', 'npp_insentif')
                 ->sortable()
                 ->searchable(),
-            Column::make('Npp insentif', 'npp_insentif')
+            Column::make('Nama', 'nama_pegawai')
                 ->sortable()
                 ->searchable(),
-            Column::make('Nama pegawai', 'nama_pegawai')
-                ->sortable()
-                ->searchable(),
-            Column::make('Status pegawai', 'status_pegawai')
+            Column::make('Status', 'status_pegawai')
                 ->sortable(),
             Column::make('No hp', 'no_hp'),
             Column::make('Email', 'email'),
-            Column::make('Level insentif', 'level_insentif')
+            Column::make('Level', 'level_insentif')
                 ->sortable(),
             Column::make('Penempatan', 'penempatan')
                 ->sortable(),
@@ -190,8 +189,7 @@ final class InsentifTabel extends PowerGridComponent
                 ->bodyAttribute('text-right')
                 ->sortable(),
             Column::make('Blast', 'has_blast')
-                ->sortable()
-                ->searchable(),
+                ->sortable(),
             Column::make('Terkirim', 'status_blast')
                 ->sortable()
                 ->visibleInExport(false),
@@ -212,10 +210,10 @@ final class InsentifTabel extends PowerGridComponent
         return [
             Filter::inputText('npp_insentif')->placeholder('cari npp'),
             Filter::inputText('nama_pegawai')->placeholder('cari nama'),
-            Filter::enumSelect('insentif_periode_bulan', 'kehadiran_periode_bulan')
+            Filter::enumSelect('insentif_periode_bulan', 'insentif_periode_bulan')
                 ->dataSource(Bulan::cases())
                 ->optionLabel('insentif_periode_bulan'),
-            Filter::enumSelect('kehadiran_pembayaran_bulan', 'kehadiran_pembayaran_bulan')
+            Filter::enumSelect('insentif_pembayaran_bulan', 'insentif_pembayaran_bulan')
                 ->dataSource(Bulan::cases())
                 ->optionLabel('insentif_pembayaran_bulan'),
             FIlter::boolean('has_blast', 'has_blast')
