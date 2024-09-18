@@ -32,7 +32,7 @@
       }
 
       .antialiased {
-        background-image: url("<?php public_path('pmu.png');?>");
+        background-image: url("<?php public_path('pmu.png'); ?>");
         background-repeat: no-repeat;
         background-size: cover;
       }
@@ -63,95 +63,101 @@
           <p class="text-sm font-medium text-gray-600">STRUK PEMBAYARAN INSENTIF KINERJA PEJABAT STRUKTURAL</p>
           <p class="text-sm font-medium text-gray-600">PERIODE BULAN
             {{ \App\Enums\Bulan::from($insentif->insentif_periode_bulan)->labels() }}
-            {{ $insentif->kehadiran_tahun }} PEMBAYARAN
+            {{ $insentif->insentif_tahun }} PEMBAYARAN
             {{ \App\Enums\Bulan::from($insentif->insentif_pembayaran_bulan)->labels() }}
-            {{ $insentif->kehadiran_tahun }}</p>
+            {{ $insentif->insentif_tahun }}
+          </p>
         </div>
       </div>
       <hr class="border-1 mb-1 h-px bg-gray-200 dark:bg-gray-900">
       <hr class="border-1 mb-4 h-px bg-gray-200 dark:bg-gray-900">
-      <div class="grid grid-cols-2 gap-4 text-sm">
+      <div class="grid grid-cols-2 gap-4 text-xs">
         <div class="grid-cols-subgrid grid gap-3">
-          <table class="table-fixed text-nowrap">
+          <table class="table-fixed uppercase">
             <thead>
               <tr>
-                <th 
-                    class="text-left">NO.</th>
+                <th class="py-2 text-left">NO.</th>
                 <th colspan="3"
-                    class="text-left">{{$insentif->id}}</th>
+                    class="py-2 text-left">{{ $insentif->id }}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>NAMA</td>
-                <td>:</td>
-                <td colspan="2"
+                <td class="py-2">NAMA</td>
+                <td class="py-2">:</td>
+                <td class="py-2"
+                    colspan="2"
                     class="text-right">{{ $insentif->nama_pegawai }}</td>
               </tr>
               <tr>
-                <td>NPP</td>
-                <td>:</td>
-                <td colspan="2"
+                <td class="py-2">NPP</td>
+                <td class="py-2">:</td>
+                <td class="py-2"
+                    colspan="2"
                     class="text-right">{{ $insentif->npp_insentif }}</td>
               </tr>
               <tr>
-                <td>LEVEL</td>
-                <td>:</td>
-                <td colspan="2"
+                <td class="py-2">LEVEL</td>
+                <td class="py-2">:</td>
+                <td class="py-2"
+                    colspan="2"
                     class="text-right">{{ $insentif->level_insentif }}</td>
               </tr>
               <tr>
-                <td>JABATAN</td>
-                <td>:</td>
-                <td colspan="2"
+                <td class="py-2">JABATAN</td>
+                <td class="py-2">:</td>
+                <td class="py-2"
+                    colspan="2"
                     class="text-right">{{ $insentif->jabatan }}</td>
               </tr>
               <tr>
-                <td>NOMINAL <br>MAX IKIN</td>
-                <td>:</td>
-                <td colspan="2"
-                    class="text-right">{{ number_format($insentif->nominal_max_insentif_kinerja,2,',', '.') }}</td>
+                <td class="py-2">NOMINAL <br>MAX IKIN</td>
+                <td class="py-2">:</td>
+                <td class="py-2"
+                    colspan="2"
+                    class="text-right"><p class="text-right">{{ number_format($insentif->nominal_max_insentif_kinerja, 2, ',', '.') }}</p></td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="grid-cols-subgrid grid gap-3">
-          <table class="table-fixed text-nowrap">
+          <table class="table-fixed uppercase">
             <thead>
               <tr>
-                <th colspan="4"></th>
+                <th scope="col" colspan="4"
+                    class="py-2"></th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>KINERJA KEUANGAN <br>PERUSAHAAN (%)</td>
-                <td>:</td>
-                <td colspan="2"
-                    class="text-right">{{ $insentif->kinerja_keuangan_perusahaan }}%</td>
+                <td class="py-2">KINERJA KEUANGAN <br>PERUSAHAAN (%)</td>
+                <td class="py-2">:</td>
+                <td class="py-2"
+                    colspan="2"><p class="text-right">{{ $insentif->kinerja_keuangan_perusahaan * 100 }}%</p></td>
               </tr>
               <tr>
-                <td>NILAI / SCOR KPI (%)</td>
-                <td>:</td>
-                <td colspan="2"
-                    class="text-right">{{ $insentif->nilai_kpi}}%</td>
+                <td class="py-2">NILAI / SCOR KPI (%)</td>
+                <td class="py-2">:</td>
+                <td class="py-2"
+                    colspan="2"><p class="text-right">{{ $insentif->nilai_kpi * 100 }}%</p></td>
               </tr>
               <tr>
-                <td>INSENTIF KINERJA</td>
-                <td>:</td>
-                <td colspan="2"
-                    class="text-right">{{ number_format($insentif->insentif_kinerja, 2, ',', '.') }}</td>
+                <td class="py-2">INSENTIF KINERJA</td>
+                <td class="py-2">:</td>
+                <td class="py-2"
+                    colspan="2"><p class="text-right">{{ number_format($insentif->insentif_kinerja, 2, ',', '.') }}</p></td>
               </tr>
               <tr>
-                <td>PEMBULATAN</td>
-                <td>:</td>
-                <td colspan="2"
-                    class="text-right">{{ number_format($insentif->pembulatan, 2, ',', '.') }}</td>
+                <td class="py-2">PEMBULATAN</td>
+                <td class="py-2">:</td>
+                <td class="py-2"
+                    colspan="2"><p class="text-right">{{ number_format($insentif->pembulatan, 2, ',', '.') }}</p></td>
               </tr>
               <tr class="font-bold">
-                <td>DITERIMAKAN</td>
-                <td>:</td>
-                <td colspan="2"
-                    class="text-right">{{ number_format($insentif->jumlah_diterimakan, 2, ',', '.') }}</td>
+                <td class="py-2">DITERIMAKAN</td>
+                <td class="py-2">:</td>
+                <td class="py-2"
+                    colspan="2"><p class="text-right">{{ number_format($insentif->diterimakan, 2, ',', '.') }}</p></td>
               </tr>
             </tbody>
           </table>

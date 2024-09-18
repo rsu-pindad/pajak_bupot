@@ -22,12 +22,18 @@ class extends Component {
 
     #[Validate('required')]
     public $bulanPeriodeKehadiran;
-    
+
     #[Validate('required')]
     public $bulanPembayaranKehadiran;
 
     #[Validate('required')]
     public $tahunKehadiran;
+
+    #[Validate('required')]
+    public $barisMulai;
+
+    #[Validate('required')]
+    public $barisAkhir;
 
     public $bulan = [];
     public $tahun;
@@ -36,21 +42,21 @@ class extends Component {
 
     public function mount()
     {
-      setlocale(LC_ALL, 'IND');
-      for ($m=1; $m<=12; $m++) {
-        // $this->bulan[] = Carbon::parse(date('F', mktime(0,0,0,$m, 1, date('Y'))))->formatLocalized('%B');
-        $this->bulan[] = date('F', mktime(0,0,0,$m, 1, date('Y')));
-      }
-      $this->tahun = collect(range(10, 0))->map(function ($item) {
-        return (string) date('Y') - $item;
-      });
+        setlocale(LC_ALL, 'IND');
+        for ($m = 1; $m <= 12; $m++) {
+            // $this->bulan[] = Carbon::parse(date('F', mktime(0,0,0,$m, 1, date('Y'))))->formatLocalized('%B');
+            $this->bulan[] = date('F', mktime(0, 0, 0, $m, 1, date('Y')));
+        }
+        $this->tahun = collect(range(10, 0))->map(function ($item) {
+            return (string) date('Y') - $item;
+        });
     }
 
     public function import()
     {
         $this->validate();
         try {
-            $import = new SelectSheetImport($this->bulanPeriodeKehadiran, $this->bulanPembayaranKehadiran, $this->tahunKehadiran);
+            $import = new SelectSheetImport($this->bulanPeriodeKehadiran, $this->bulanPembayaranKehadiran, $this->tahunKehadiran, $this->barisMulai, $this->barisAkhir);
             $import->onlySheets('tj kehadiran');
 
             $excelImport = Excel::import($import, $this->fileUpload->path());
@@ -77,7 +83,8 @@ class extends Component {
     }
 
     #[On('executePulihkan')]
-    public function pulihkan($rowId) {
+    public function pulihkan($rowId)
+    {
         try {
             $this->form->restore($rowId);
             $this->dispatch('notifikasi', icon: 'success', title: 'Blast', description: 'data berhasil dipulihkan!.');
@@ -87,7 +94,8 @@ class extends Component {
     }
 
     #[On('executeHapus')]
-    public function hapus ($rowId) {
+    public function hapus($rowId)
+    {
         try {
             $this->form->destroy($rowId);
             $this->dispatch('notifikasi', icon: 'success', title: 'Blast', description: 'data berhasil dihapus!.');
@@ -97,7 +105,8 @@ class extends Component {
     }
 
     #[On('executePermanentHapus')]
-    public function permanentHapus($rowId) {
+    public function permanentHapus($rowId)
+    {
         try {
             $this->form->permanentDestroy($rowId);
             $this->dispatch('notifikasi', icon: 'success', title: 'Kode', description: 'data berhasil dihapus dari database!.');
@@ -105,77 +114,115 @@ class extends Component {
             $this->dispatch('notifikasi', icon: 'error', title: 'Kode', description: $th->getMessage());
         }
     }
-
 }; ?>
 
 <section class="bg-white py-6 antialiased dark:bg-gray-900 md:py-6">
   <div class="mx-auto max-w-screen-lg px-4 2xl:px-0">
     <nav class="mb-4 flex"
-          aria-label="Breadcrumb">
+         aria-label="Breadcrumb">
       <ol class="inline-flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
         <li class="inline-flex items-center">
           <a href="#"
-              class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white">
-            <x-cui-cil-home class="me-2 h-4 w-4"/>
+             class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white">
+            <x-cui-cil-home class="me-2 h-4 w-4" />
             Payroll
           </a>
         </li>
         <li class="flex items-center">
           <a href="#"
-              class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white">
-            <x-cui-cil-caret-right class="mx-1 h-4 w-4 text-gray-400"/>
+             class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white">
+            <x-cui-cil-caret-right class="mx-1 h-4 w-4 text-gray-400" />
             Kehadiran
           </a>
         </li>
       </ol>
     </nav>
     <div class="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-1">
-      <div class="h-auto overflow-x-auto rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
+      <div
+           class="h-auto overflow-x-auto rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
         <div class="p-6">
-          
-          <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="grid grid-cols-subgrid gap-4 col-span-2">
+
+          <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
+            <div class="grid-cols-subgrid col-span-2 grid gap-4">
               <div class="col-start-1">
                 <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-                      for="file_input">Unggah Berkas
+                       for="file_input">Unggah Berkas
                 </label>
                 <input id="file_input"
-                      wire:model="fileUpload"
-                      wire:loading.attr="disabled"
-                      class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-                      aria-describedby="file_input_help"
-                      type="file">
+                       wire:model="fileUpload"
+                       wire:loading.attr="disabled"
+                       class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+                       aria-describedby="file_input_help"
+                       type="file">
                 <p id="file_input_help"
-                  class="mt-1 text-sm text-gray-500 dark:text-gray-300">tipe file : xlsx, xls
+                   class="mt-1 text-sm text-gray-500 dark:text-gray-300">tipe file : xlsx, xls
                 </p>
               </div>
               <div class="col-start-2">
-                <label for="tahun_insentif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tahun Kehadiran</label>
-                <select wire:model="tahunKehadiran" wire:loading.attr="disabled" id="tahun_insentif" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="tahun_insentif"
+                       class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Tahun Kehadiran</label>
+                <select id="tahun_insentif"
+                        wire:model="tahunKehadiran"
+                        wire:loading.attr="disabled"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500">
                   <option hidden>Pilih Tahun Kehadiran</option>
                   @foreach ($this->tahun as $t)
-                    <option value="{{$t}}">{{$t}}</option>
+                    <option value="{{ $t }}">{{ $t }}</option>
                   @endforeach
                 </select>
               </div>
             </div>
             <div>
-              <label for="bulan_periode_kehadiran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Periode Kehadiran</label>
-              <select wire:model="bulanPeriodeKehadiran" wire:loading.attr="disabled" id="bulan_periode_kehadiran" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <label for="bulan_periode_kehadiran"
+                     class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Bulan Periode
+                Kehadiran</label>
+              <select id="bulan_periode_kehadiran"
+                      wire:model="bulanPeriodeKehadiran"
+                      wire:loading.attr="disabled"
+                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500">
                 <option hidden>Pilih Bulan Periode Kehadiran</option>
                 @foreach ($this->bulan as $bulan)
-                  <option value="{{Carbon::parse($bulan)->format('m')}}">{{Carbon::parse($bulan)->formatLocalized('%B')}}</option>
+                  <option value="{{ Carbon::parse($bulan)->format('m') }}">
+                    {{ Carbon::parse($bulan)->formatLocalized('%B') }}</option>
                 @endforeach
               </select>
             </div>
             <div>
-              <label for="bulan_pembayaran_kehadiran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bulan Pembayaran Kehadiran</label>
-              <select wire:model="bulanPembayaranKehadiran" wire:loading.attr="disabled" id="bulan_pembayaran_kehadiran" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <label for="bulan_pembayaran_kehadiran"
+                     class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Bulan Pembayaran
+                Kehadiran</label>
+              <select id="bulan_pembayaran_kehadiran"
+                      wire:model="bulanPembayaranKehadiran"
+                      wire:loading.attr="disabled"
+                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500">
                 <option hidden>Pilih Bulan Pembayaran Kehadiran</option>
                 @foreach ($this->bulan as $bulan)
-                  <option value="{{Carbon::parse($bulan)->format('m')}}">{{Carbon::parse($bulan)->formatLocalized('%B')}}</option>
+                  <option value="{{ Carbon::parse($bulan)->format('m') }}">
+                    {{ Carbon::parse($bulan)->formatLocalized('%B') }}</option>
                 @endforeach
               </select>
+            </div>
+            <div>
+              <label for="baris_mulai"
+                     class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                Data Excel Baris Mulai</label>
+              <input id="baris_mulai"
+                     wire:model="barisMulai"
+                     wire:loading.attr="disabled"
+                     class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+                     aria-describedby="file_input_help"
+                     type="number">
+            </div>
+            <div>
+              <label for="baris_akhir"
+                     class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                Data Excel Baris Akhir</label>
+              <input id="baris_akhir"
+                     wire:model="barisAkhir"
+                     wire:loading.attr="disabled"
+                     class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+                     aria-describedby="file_input_help"
+                     type="number">
             </div>
           </div>
 
@@ -206,8 +253,9 @@ class extends Component {
           </div>
         </div>
       </div>
-      <div class="h-64 p-6 overflow-x-hidden rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 md:h-auto">
-          <livewire:power.payroll.kehadiran-tabel />
+      <div
+           class="h-64 overflow-x-hidden rounded-lg border-2 border-dashed border-gray-300 p-6 dark:border-gray-600 md:h-auto">
+        <livewire:power.payroll.kehadiran-tabel />
       </div>
     </div>
   </div>

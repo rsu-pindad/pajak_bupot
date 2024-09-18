@@ -29,6 +29,12 @@ class extends Component {
     #[Validate('required')]
     public $tahunInsentif;
 
+    #[Validate('required')]
+    public $barisMulai;
+
+    #[Validate('required')]
+    public $barisAkhir;
+
     public $bulan = [];
     public $tahun;
 
@@ -50,7 +56,7 @@ class extends Component {
     {
         $this->validate();
         try {
-            $import = new SelectSheetImport($this->bulanPeriodeInsentif, $this->bulanPembayaranInsentif, $this->tahunInsentif);
+            $import = new SelectSheetImport($this->bulanPeriodeInsentif, $this->bulanPembayaranInsentif, $this->tahunInsentif, $this->barisMulai, $this->barisAkhir);
             $import->onlySheets('INSENTIF FIX');
 
             $excelImport = Excel::import($import, $this->fileUpload->path());
@@ -194,6 +200,28 @@ class extends Component {
                     {{ Carbon::parse($bulan)->formatLocalized('%B') }}</option>
                 @endforeach
               </select>
+            </div>
+            <div>
+              <label for="baris_mulai"
+                     class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                Data Excel Baris Mulai</label>
+              <input id="baris_mulai"
+                     wire:model="barisMulai"
+                     wire:loading.attr="disabled"
+                     class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+                     aria-describedby="file_input_help"
+                     type="number">
+            </div>
+            <div>
+              <label for="baris_akhir"
+                     class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                Data Excel Baris Akhir</label>
+              <input id="baris_akhir"
+                     wire:model="barisAkhir"
+                     wire:loading.attr="disabled"
+                     class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+                     aria-describedby="file_input_help"
+                     type="number">
             </div>
           </div>
 

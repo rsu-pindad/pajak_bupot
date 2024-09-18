@@ -17,24 +17,28 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 
 class InsentifImport implements ToModel, WithChunkReading, SkipsEmptyRows, WithCalculatedFormulas, WithStartRow, WithSkipDuplicates
 {
-    use RemembersRowNumber, Importable;
+    use Importable;
 
     protected $heading;
     protected $bulan_periode;
     protected $bulan_pembayaran;
     protected $tahun;
+    protected $mulai;
+    protected $akhir;
 
-    public function __construct(int $heading, $bulan_periode, $bulan_pembayaran, $tahun)
+    public function __construct(int $heading, $bulan_periode, $bulan_pembayaran, $tahun, $mulai, $akhir)
     {
         $this->heading          = $heading;
         $this->bulan_periode    = $bulan_periode;
         $this->bulan_pembayaran = $bulan_pembayaran;
         $this->tahun            = $tahun;
+        $this->mulai            = $mulai;
+        $this->akhir            = $akhir;
     }
 
     public function startRow(): int
     {
-        return 5;
+        return $this->mulai;
     }
 
     // public function mapping(): array
@@ -124,6 +128,6 @@ class InsentifImport implements ToModel, WithChunkReading, SkipsEmptyRows, WithC
 
     public function limit(): int
     {
-        return 318;
+        return $this->akhir;
     }
 }

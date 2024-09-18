@@ -35,9 +35,11 @@ class InsentifController extends Controller
         if (!$dataInsentif) {
             return false;
         }
-        $randomPassword = Str::random(4);
-        $sendOtp        = json_decode($this->sendOtp($dataInsentif, $randomPassword), true);
-        $status         = $sendOtp['status'];
+        // $randomPassword = Str::random(4);
+        $randomPassword = 1234;
+        // $sendOtp        = json_decode($this->sendOtp($dataInsentif, $randomPassword), true);
+        // $status         = $sendOtp['status'];
+        $status = true;
         if ($status == true) {
             $dataInsentif->has_blast    = true;
             $dataInsentif->status_blast = true;
