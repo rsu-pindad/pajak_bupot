@@ -54,10 +54,10 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware('throttle:3,1')->group(function () {
-    Route::get('/berkas-kehadiran-karyawan/{user}/{bulan}/{tahun}', [KehadiranController::class, '__invoke'])->name('berkas-kehadiran-karyawan');
+    Route::get('/berkas-kehadiran-karyawan/{user}/{bulan}/{tahun}/{otp}', [KehadiranController::class, '__invoke'])->name('berkas-kehadiran-karyawan');
     Route::get('/slip-kehadiran/{user}', [KehadiranController::class, 'view'])->name('slip-kehadiran');
     
-    Route::get('/berkas-insentif-karyawan/{user}/{bulan}/{tahun}', [InsentifController::class, '__invoke'])->name('berkas-insentif-karyawan');
+    Route::get('/berkas-insentif-karyawan/{user}/{bulan}/{tahun}/{otp}', [InsentifController::class, '__invoke'])->name('berkas-insentif-karyawan');
     Route::get('/slip-insentif/{user}', [InsentifController::class, 'view'])->name('slip-insentif');
     
     Route::get('/slip-blast/{insentif}/{kehadiran}', [BlastController::class, '__invoke'])->name('slip-blast');

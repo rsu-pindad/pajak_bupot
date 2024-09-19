@@ -29,6 +29,7 @@ class extends Component {
     public $urlBerkas = '';
     public $signedUrl = '';
     public $tahun;
+    public $otp;
 
     public function mount()
     {
@@ -54,7 +55,8 @@ class extends Component {
             $this->signedUrl = '';
             return $this->dispatch('notifikasi', icon: 'info', title: 'Berkas', description: 'berkas insentif tidak ditemukan!.');
         }
-        $this->signedUrl = URL::temporarySignedRoute('berkas-insentif-karyawan', now()->addDays(1), ['user' => Auth::user()->npp, 'bulan' => $this->bulanPembayaranInsentif, 'tahun' => $this->tahunInsentif]);
+        $this->otp = Str::random(4);
+        $this->signedUrl = URL::temporarySignedRoute('berkas-insentif-karyawan', now()->addDays(1), ['user' => Auth::user()->npp, 'bulan' => $this->bulanPembayaranInsentif, 'tahun' => $this->tahunInsentif, 'otp' => $this->otp]);
         $this->urlBerkas = UrlService::shorten($this->signedUrl)
             ->withOpenLimit(2)
             ->build();
@@ -162,6 +164,9 @@ class extends Component {
                 {{ $this->tahunInsentif }}</span>
               <x-cui-cil-arrow-right class="ms-2 h-4 w-4" />
             </a>
+            <h4 class="ml-4 font-semibold">
+              OTP : {{$this->otp}}
+            </h4>
           </div>
         </div>
       </div>

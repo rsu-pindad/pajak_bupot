@@ -36,8 +36,9 @@ class InsentifController extends Controller
             return false;
         }
         $randomPassword = Str::random(4);
-        $sendOtp        = json_decode($this->sendOtp($dataInsentif, $randomPassword), true);
-        $status         = $sendOtp['status'];
+        // $sendOtp        = json_decode($this->sendOtp($dataInsentif, $randomPassword), true);
+        // $status         = $sendOtp['status'];
+        $status = true;
         if ($status == true) {
             $dataInsentif->has_blast    = true;
             $dataInsentif->status_blast = true;
@@ -57,7 +58,8 @@ class InsentifController extends Controller
                 ->setOutputFile('slip_insentif/' . $pdfName, 'public')
                 ->setFormat('A5')
                 ->setOwnerPassword(config('app.PDF_OWNER_PASSWORD'))
-                ->setPassword($randomPassword)
+                // ->setPassword($randomPassword)
+                ->setPassword($request->otp)
                 ->secure();
             Storage::disk('public')->delete($pdfName);
             $pathFile = Storage::disk('public')->path('slip_insentif/' . $pdfName);

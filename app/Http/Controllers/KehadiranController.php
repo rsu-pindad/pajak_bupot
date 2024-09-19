@@ -36,8 +36,9 @@ class KehadiranController extends Controller
             return false;
         }
         $randomPassword = Str::random(4);
-        $sendOtp        = json_decode($this->sendOtp($dataKehadiran, $randomPassword), true);
-        $status         = $sendOtp['status'];
+        // $sendOtp        = json_decode($this->sendOtp($dataKehadiran, $randomPassword), true);
+        // $status         = $sendOtp['status'];
+        $status = true;
         if ($status == true) {
             $dataKehadiran->has_blast    = true;
             $dataKehadiran->status_blast = true;
@@ -57,12 +58,13 @@ class KehadiranController extends Controller
                 ->setOutputFile('slip_kehadiran/' . $pdfName, 'public')
                 ->setFormat('A5')
                 ->setOwnerPassword(config('app.PDF_OWNER_PASSWORD'))
-                ->setPassword($randomPassword)
+                // ->setPassword($randomPassword)
+                ->setPassword($request->otp)
                 ->secure();
             Storage::disk('public')->delete($pdfName);
             $pathFile = Storage::disk('public')->path('slip_kehadiran/' . $pdfName);
 
-            return response()->file($pathFile)->deleteFileAfterSend();
+            return response()->file($pathFile, ['test'])->deleteFileAfterSend();
         } else {
             return $sendOtp['reason'];
         }
