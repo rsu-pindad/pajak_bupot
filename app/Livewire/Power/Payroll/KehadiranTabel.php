@@ -79,10 +79,10 @@ final class KehadiranTabel extends PowerGridComponent
     {
         $this->showCheckBox();
 
-        $this->persist(
-            tableItems: ['columns', 'filters', 'sorting'],
-            prefix: 'payroll_kehadiran_table_' . Auth::id(),
-        );
+        // $this->persist(
+        //     tableItems: ['columns', 'filters', 'sorting'],
+        //     prefix: 'payroll_kehadiran_table_' . Auth::id(),
+        // );
         $this->strRandom = Str::random(4);
 
         return [

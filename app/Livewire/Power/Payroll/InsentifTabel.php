@@ -31,7 +31,7 @@ final class InsentifTabel extends PowerGridComponent
     #[Locked]
     public string $tableName = 'payroll_insentif';
 
-    public bool $deferLoading = true;
+    public bool $deferLoading = false;
     public string $strRandom  = '';
 
     public function hydrate(): void
@@ -70,10 +70,10 @@ final class InsentifTabel extends PowerGridComponent
     {
         $this->showCheckBox();
 
-        $this->persist(
-            tableItems: ['columns', 'filters', 'sorting'],
-            prefix: 'payroll_insentif_table_' . Auth::id(),
-        );
+        // $this->persist(
+        //     tableItems: ['columns', 'filters', 'sorting'],
+        //     prefix: 'payroll_insentif_table_' . Auth::id(),
+        // );
         $this->strRandom = Str::random(4);
 
         return [

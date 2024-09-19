@@ -84,7 +84,7 @@ new class extends Component {}; ?>
             <x-cui-cil-chevron-circle-down-alt class="size-4" />
           </button>
           <ul id="dropdown-payroll"
-              class="@if (request()->routeIs(['payroll-insentif', 'payroll-kehadiran'])) space-y-2 py-2 @else hidden space-y-2 py-2 @endif">
+              class="@if (request()->routeIs(['payroll-insentif', 'payroll-kehadiran','payroll-blast'])) space-y-2 py-2 @else hidden space-y-2 py-2 @endif">
               <li>
                 <a href="{{ route('payroll-insentif') }}"
                    class="@if (Route::currentRouteName() === 'payroll-insentif') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
@@ -97,6 +97,13 @@ new class extends Component {}; ?>
                   class="@if (Route::currentRouteName() === 'payroll-kehadiran') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
                   <span class="ml-3 flex-1 whitespace-nowrap">Kehadiran</span>
                   <x-cui-cil-calendar-check class="h-4 w-4" />
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('payroll-blast') }}"
+                  class="@if (Route::currentRouteName() === 'payroll-blast') active bg-blue-200 @endif group flex w-full items-center rounded-lg p-2 pl-11 text-base font-medium text-gray-900 transition duration-75 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-700">
+                  <span class="ml-3 flex-1 whitespace-nowrap">Broadcast</span>
+                  <x-cui-cil-share-alt class="h-4 w-4" />
                 </a>
               </li>
           </ul>

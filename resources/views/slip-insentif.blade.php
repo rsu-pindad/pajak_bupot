@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
 
-    <title>Slip Kehadiran</title>
+    <title>Slip Insentif</title>
 
     <!-- Fonts -->
     <link rel="stylesheet"

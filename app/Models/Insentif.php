@@ -34,4 +34,6 @@ class Insentif extends Model
         'has_blast',
         'status_blast'
     ];
+
+    // public function payrollKehadiran()
 }

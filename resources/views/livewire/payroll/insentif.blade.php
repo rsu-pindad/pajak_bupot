@@ -254,7 +254,36 @@ class extends Component {
       </div>
       <div
            class="h-64 overflow-x-hidden rounded-lg border-2 border-dashed border-gray-300 p-6 dark:border-gray-600 md:h-auto">
-        <livewire:power.payroll.insentif-tabel />
+           <div
+              class="flex-column flex flex-wrap items-center justify-between space-y-4 bg-white py-4 dark:bg-gray-900 md:flex-row md:space-y-0">
+              <div wire:ignore>
+              </div>
+              <div>
+                <button id="dropdownActionButton"
+                        data-dropdown-toggle="dropdownAction"
+                        class="inline-flex items-center rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                        type="button">
+                  <span class="sr-only">Button Menu</span>
+                  Menu
+                  <x-cui-cil-chevron-circle-down-alt class="size-3 ml-2 fill-current" />
+                </button>
+                <!-- Dropdown menu -->
+                <div id="dropdownAction"
+                    class="z-10 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white shadow dark:divide-gray-600 dark:bg-gray-700">
+                  <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                      aria-labelledby="dropdownActionButton">
+                    <li>
+                      <a href="{{route('template-import', ['jenis' => 'insentif'])}}"
+                        class="inline-flex items-center justify-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        <x-cui-cil-cloud-download class="h-4 w-4 mr-2" />
+                        Template Import
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+           <livewire:power.payroll.insentif-tabel />
       </div>
     </div>
   </div>

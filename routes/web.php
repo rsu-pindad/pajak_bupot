@@ -3,10 +3,11 @@
 use App\Http\Controllers\KehadiranController;
 use App\Livewire\ManagePublish;
 use App\Livewire\ManageTransfers;
-use App\Models\Insentif;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\InsentifController;
+use App\Http\Controllers\BlastController;
+use App\Http\Controllers\TemplateController;
 
 /*
  * |--------------------------------------------------------------------------
@@ -46,6 +47,10 @@ Route::middleware(['auth'])->group(function () {
 
     Volt::route('berkas-insentif', 'employee.insentif')->name('employee-insentif');
     Volt::route('berkas-kehadiran', 'employee.kehadiran')->name('employee-kehadiran');
+
+    Volt::route('karyawan-payroll-blast', 'payroll.blast')->name('payroll-blast');
+
+    Route::get('template-import/{jenis}', [TemplateController::class, '__invoke'])->name('template-import');
 });
 
 Route::middleware('throttle:3,1')->group(function () {
@@ -54,6 +59,8 @@ Route::middleware('throttle:3,1')->group(function () {
     
     Route::get('/berkas-insentif-karyawan/{user}/{bulan}/{tahun}', [InsentifController::class, '__invoke'])->name('berkas-insentif-karyawan');
     Route::get('/slip-insentif/{user}', [InsentifController::class, 'view'])->name('slip-insentif');
+    
+    Route::get('/slip-blast/{insentif}/{kehadiran}', [BlastController::class, '__invoke'])->name('slip-blast');
 });
 
 require __DIR__ . '/auth.php';
